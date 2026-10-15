@@ -1,0 +1,23 @@
+packages:
+  - apps/*
+  - packages/*
+
+overrides:
+  "@ag-ui/core": ^0.0.59
+  "@ag-ui/client": ^0.0.59
+  "@mastra/core": 1.50.0
+  "@mastra/deployer": 1.50.0
+  "@mastra/server": 1.50.0
+  "@mastra/loggers": 1.2.0
+  "@mastra/client-js": 1.31.0
+  # Web and mobile must share one copy of the React types. With two copies,
+  # CopilotKit's types no longer match the app's own React types.
+  "@types/react": ~19.2.7
+  "@types/react-dom": ~19.2.3
+
+packageExtensions:
+  # json-server-auth requires express without declaring it. Pin the Express 4
+  # line it was written for, otherwise it picks up whichever version is hoisted.
+  json-server-auth@2.1.0:
+    dependencies:
+      express: ^4.17.1

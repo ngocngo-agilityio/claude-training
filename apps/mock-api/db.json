@@ -1,0 +1,1364 @@
+{
+  "users": [
+    {
+      "email": "ngoc.ngo@asnet.com.vn",
+      "fullName": "Ngoc Ngo",
+      "password": "$2a$10$4pW6J6zI..GsZoTsPO5UKO/5OKcBov/v/uthis8pyyuTibPHhynOq",
+      "id": 1
+    },
+    {
+      "email": "test@example.com",
+      "password": "$2a$10$J055IQlrlY4m84RmAKJk/.njw79lO2iP7Q/2e8mI/uGPWP4az22P.",
+      "fullName": "Test User",
+      "id": 2
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "la-dolce-vita",
+      "name": "La Dolce Vita",
+      "imageUrl": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.7,
+      "reviewCount": 128,
+      "cuisines": ["Italian", "Pasta"],
+      "cuisineSearch": "italian pasta",
+      "location": "Downtown",
+      "distance": "0.3 km",
+      "pricePerPerson": 30,
+      "occasions": ["Romantic", "Anniversary", "Birthday"],
+      "occasionSearch": "romantic anniversary birthday",
+      "description": "A charming Italian restaurant with candlelit tables, handmade pasta, and a warm setting for romantic dinners and special occasions.",
+      "opensAt": "7:00",
+      "closesAt": "23:00",
+      "ambience": "Romantic, Cozy, Elegant",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 8,
+      "maximumReservationGuests": 8
+    },
+    {
+      "id": "trattoria-roma",
+      "name": "Trattoria Roma",
+      "imageUrl": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.5,
+      "reviewCount": 96,
+      "cuisines": ["Italian", "Pizza"],
+      "cuisineSearch": "italian pizza",
+      "location": "Downtown",
+      "distance": "0.5 km",
+      "pricePerPerson": 24,
+      "occasions": ["Family", "Casual", "Birthday"],
+      "occasionSearch": "family casual birthday",
+      "description": "A relaxed neighborhood trattoria serving wood-fired pizza and familiar Italian favorites in a lively, family-friendly dining room.",
+      "opensAt": "10:30",
+      "closesAt": "22:30",
+      "ambience": "Casual, Lively, Family-friendly",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1579684947550-22e945225d9a?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 10
+    },
+    {
+      "id": "sakura-table",
+      "name": "Sakura Table",
+      "imageUrl": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.8,
+      "reviewCount": 214,
+      "cuisines": ["Japanese", "Sushi"],
+      "cuisineSearch": "japanese sushi",
+      "location": "Riverside",
+      "distance": "1.2 km",
+      "pricePerPerson": 42,
+      "occasions": ["Romantic", "Business", "Anniversary"],
+      "occasionSearch": "romantic business anniversary",
+      "description": "A refined Japanese dining room known for carefully prepared sushi, seasonal ingredients, and attentive service by the riverside.",
+      "opensAt": "7:00",
+      "closesAt": "22:00",
+      "ambience": "Refined, Serene, Intimate",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 10,
+      "maximumReservationGuests": 6
+    },
+    {
+      "id": "saigon-garden",
+      "name": "Saigon Garden",
+      "imageUrl": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.6,
+      "reviewCount": 187,
+      "cuisines": ["Vietnamese", "Asian"],
+      "cuisineSearch": "vietnamese asian",
+      "location": "District 1",
+      "distance": "0.8 km",
+      "pricePerPerson": 18,
+      "occasions": ["Family", "Casual", "Group"],
+      "occasionSearch": "family casual group",
+      "description": "A welcoming Vietnamese restaurant celebrating local recipes, fresh herbs, and shareable dishes in the heart of District 1.",
+      "opensAt": "10:00",
+      "closesAt": "22:00",
+      "ambience": "Welcoming, Traditional, Social",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 7,
+      "maximumReservationGuests": 12
+    },
+    {
+      "id": "maison-lumiere",
+      "name": "Maison Lumière",
+      "imageUrl": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.9,
+      "reviewCount": 84,
+      "cuisines": ["French", "European"],
+      "cuisineSearch": "french european",
+      "location": "Riverside",
+      "distance": "1.5 km",
+      "pricePerPerson": 65,
+      "occasions": ["Romantic", "Business", "Anniversary"],
+      "occasionSearch": "romantic business anniversary",
+      "description": "An elegant French restaurant offering modern European cuisine, polished service, and panoramic riverside views for memorable occasions.",
+      "opensAt": "17:30",
+      "closesAt": "23:00",
+      "ambience": "Elegant, Romantic, Upscale",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1516211697506-8360dbcfe9a4?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 12,
+      "maximumReservationGuests": 6
+    },
+    {
+      "id": "taco-local",
+      "name": "Taco Local",
+      "imageUrl": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.4,
+      "reviewCount": 153,
+      "cuisines": ["Mexican", "Latin"],
+      "cuisineSearch": "mexican latin",
+      "location": "City Center",
+      "distance": "0.9 km",
+      "pricePerPerson": 15,
+      "occasions": ["Casual", "Group", "Family"],
+      "occasionSearch": "casual group family",
+      "description": "A colorful taqueria serving bold Mexican street food, fresh salsas, and quick casual meals in the city center.",
+      "opensAt": "11:00",
+      "closesAt": "23:30",
+      "ambience": "Colorful, Energetic, Casual",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 5,
+      "maximumReservationGuests": 12
+    },
+    {
+      "id": "green-table",
+      "name": "Green Table",
+      "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.5,
+      "reviewCount": 112,
+      "cuisines": ["Vegetarian", "Vegan"],
+      "cuisineSearch": "vegetarian vegan",
+      "location": "District 3",
+      "distance": "2.1 km",
+      "pricePerPerson": 16,
+      "occasions": ["Casual", "Healthy", "Family"],
+      "occasionSearch": "casual healthy family",
+      "description": "A bright plant-forward café featuring wholesome vegetarian and vegan dishes made with seasonal produce and house-made ingredients.",
+      "opensAt": "08:00",
+      "closesAt": "21:00",
+      "ambience": "Bright, Calm, Healthy",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 9,
+      "maximumReservationGuests": 8
+    },
+    {
+      "id": "ember-steakhouse",
+      "name": "Ember Steakhouse",
+      "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.7,
+      "reviewCount": 176,
+      "cuisines": ["Steakhouse", "American"],
+      "cuisineSearch": "steakhouse american",
+      "location": "District 1",
+      "distance": "1.0 km",
+      "pricePerPerson": 55,
+      "occasions": ["Business", "Birthday", "Anniversary"],
+      "occasionSearch": "business birthday anniversary",
+      "description": "A contemporary steakhouse specializing in premium grilled cuts, classic sides, and confident service for celebrations and business dinners.",
+      "opensAt": "17:00",
+      "closesAt": "23:30",
+      "ambience": "Sophisticated, Warm, Modern",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1514516345957-556ca7ca84a0?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 11,
+      "maximumReservationGuests": 10
+    },
+    {
+      "id": "le-petit-jardin",
+      "name": "Le Petit Jardin",
+      "imageUrl": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.5,
+      "reviewCount": 96,
+      "cuisines": ["French", "Bistro"],
+      "cuisineSearch": "french bistro",
+      "location": "Downtown",
+      "distance": "0.5 km",
+      "pricePerPerson": 48,
+      "occasions": ["Romantic", "Anniversary", "Date Night"],
+      "occasionSearch": "romantic anniversary date night",
+      "description": "An intimate French bistro with a leafy courtyard, seasonal plates and a well-chosen wine list for date nights.",
+      "opensAt": "11:00",
+      "closesAt": "23:00",
+      "ambience": "Romantic, Intimate, Charming",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 6
+    },
+    {
+      "id": "azure-terrace",
+      "name": "Azure Terrace",
+      "imageUrl": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.4,
+      "reviewCount": 74,
+      "cuisines": ["Mediterranean", "Seafood"],
+      "cuisineSearch": "mediterranean seafood",
+      "location": "Downtown",
+      "distance": "0.9 km",
+      "pricePerPerson": 55,
+      "occasions": ["Romantic", "Anniversary", "Business"],
+      "occasionSearch": "romantic anniversary business",
+      "description": "A rooftop terrace serving Mediterranean seafood with city views, ideal for sunset dinners.",
+      "opensAt": "16:00",
+      "closesAt": "23:30",
+      "ambience": "Romantic, Airy, Elegant",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 8
+    },
+    {
+      "id": "kaze-ramen",
+      "name": "Kaze Ramen",
+      "imageUrl": "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.5,
+      "reviewCount": 142,
+      "cuisines": ["Japanese", "Ramen"],
+      "cuisineSearch": "japanese ramen",
+      "location": "Riverside",
+      "distance": "0.6 km",
+      "pricePerPerson": 22,
+      "occasions": ["Casual", "Group", "Family"],
+      "occasionSearch": "casual group family",
+      "description": "A lively ramen bar by the river with rich broths, handmade noodles and quick, friendly service.",
+      "opensAt": "11:00",
+      "closesAt": "22:00",
+      "ambience": "Lively, Casual, Warm",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 10
+    },
+    {
+      "id": "hanami-izakaya",
+      "name": "Hanami Izakaya",
+      "imageUrl": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.3,
+      "reviewCount": 88,
+      "cuisines": ["Japanese", "Izakaya"],
+      "cuisineSearch": "japanese izakaya",
+      "location": "Riverside",
+      "distance": "1.1 km",
+      "pricePerPerson": 38,
+      "occasions": ["Group", "Business", "Casual"],
+      "occasionSearch": "group business casual",
+      "description": "A cozy izakaya with grilled skewers, small plates and sake, made for sharing with friends or colleagues.",
+      "opensAt": "17:00",
+      "closesAt": "23:30",
+      "ambience": "Cozy, Social, Relaxed",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 12
+    },
+    {
+      "id": "lotus-leaf-vegan",
+      "name": "Lotus Leaf Vegan",
+      "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.6,
+      "reviewCount": 134,
+      "cuisines": ["Vegetarian", "Vegan", "Vietnamese"],
+      "cuisineSearch": "vegetarian vegan vietnamese",
+      "location": "District 3",
+      "distance": "0.7 km",
+      "pricePerPerson": 14,
+      "occasions": ["Healthy", "Casual", "Family"],
+      "occasionSearch": "healthy casual family",
+      "description": "A peaceful plant-based kitchen serving Vietnamese vegetarian classics with fresh herbs and tofu.",
+      "opensAt": "8:00",
+      "closesAt": "21:30",
+      "ambience": "Calm, Green, Welcoming",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 10
+    },
+    {
+      "id": "bloom-bowl",
+      "name": "Bloom Bowl",
+      "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85",
+      "rating": 4.4,
+      "reviewCount": 81,
+      "cuisines": ["Vegetarian", "Salads"],
+      "cuisineSearch": "vegetarian salads",
+      "location": "District 3",
+      "distance": "1.0 km",
+      "pricePerPerson": 18,
+      "occasions": ["Healthy", "Casual"],
+      "occasionSearch": "healthy casual",
+      "description": "A bright café for grain bowls, salads and cold-pressed juices, great for a light and healthy meal.",
+      "opensAt": "7:30",
+      "closesAt": "20:00",
+      "ambience": "Bright, Fresh, Casual",
+      "galleryImageUrls": [
+        "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80"
+      ],
+      "totalPhotoCount": 6,
+      "maximumReservationGuests": 6
+    }
+  ],
+  "reservations": [
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-20",
+      "guests": 3,
+      "time": "6:30 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 1
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-19",
+      "guests": 4,
+      "time": "6:30 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 2
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-21",
+      "guests": 3,
+      "time": "6:30 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 3
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-21",
+      "guests": 2,
+      "time": "7:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 4
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-19",
+      "guests": 5,
+      "time": "8:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 5
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-30",
+      "guests": 8,
+      "time": "9:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 6
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-30",
+      "guests": 5,
+      "time": "12:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 7
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-30",
+      "guests": 8,
+      "time": "4:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 8
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-29",
+      "guests": 3,
+      "time": "4:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 9
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-29",
+      "guests": 3,
+      "time": "11:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 10
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-08-30",
+      "guests": 5,
+      "time": "5:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 11
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-07",
+      "guests": 2,
+      "time": "5:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 12
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-07",
+      "guests": 2,
+      "time": "4:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 13
+    },
+    {
+      "restaurantId": "sakura-table",
+      "restaurant": "Sakura Table",
+      "date": "2026-09-07",
+      "guests": 3,
+      "time": "14:00",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 14
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-07",
+      "guests": 3,
+      "time": "13:00",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 15
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-07",
+      "guests": 2,
+      "time": "23:00",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 16
+    },
+    {
+      "restaurantId": "green-table",
+      "restaurant": "Green Table",
+      "date": "2026-09-08",
+      "guests": 2,
+      "time": "14:00",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 17
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-08",
+      "guests": 2,
+      "time": "09:00 AM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 18
+    },
+    {
+      "restaurantId": "sakura-table",
+      "restaurant": "Sakura Table",
+      "date": "2026-09-15",
+      "guests": 1,
+      "time": "7:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 19
+    },
+    {
+      "restaurantId": "saigon-garden",
+      "restaurant": "Saigon Garden",
+      "date": "2026-09-15",
+      "guests": 3,
+      "time": "2:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 20
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-15",
+      "guests": 4,
+      "time": "9:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 21
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "date": "2026-09-15",
+      "guests": 4,
+      "time": "3:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 22
+    },
+    {
+      "restaurantId": "sakura-table",
+      "restaurant": "Sakura Table",
+      "date": "2026-09-15",
+      "guests": 4,
+      "time": "8:20 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 23
+    },
+    {
+      "restaurantId": "azure-terrace",
+      "restaurant": "Azure Terrace",
+      "guests": 3,
+      "date": "2026-10-08",
+      "time": "9:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 24
+    },
+    {
+      "restaurantId": "azure-terrace",
+      "restaurant": "Azure Terrace",
+      "guests": 3,
+      "date": "2026-10-09",
+      "time": "5:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 25
+    },
+    {
+      "restaurantId": "le-petit-jardin",
+      "restaurant": "Le Petit Jardin",
+      "guests": 2,
+      "date": "2026-10-08",
+      "time": "1:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 26
+    },
+    {
+      "restaurantId": "la-dolce-vita",
+      "restaurant": "La Dolce Vita",
+      "guests": 2,
+      "date": "2026-10-08",
+      "time": "4:00 PM",
+      "status": "Confirmed",
+      "userId": "1",
+      "id": 27
+    }
+  ],
+  "menus": [
+    {
+      "id": "menu-la-dolce-vita",
+      "restaurantId": "la-dolce-vita",
+      "categories": [
+        {
+          "id": "popular",
+          "label": "Popular",
+          "items": [
+            {
+              "id": "truffle-pasta",
+              "name": "Truffle Pasta",
+              "description": "Fresh pasta with black truffle cream sauce",
+              "price": "$24",
+              "imageUrl": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "seafood-risotto",
+              "name": "Seafood Risotto",
+              "description": "Arborio rice with mixed seafood",
+              "price": "$28",
+              "imageUrl": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "mains",
+          "label": "Mains",
+          "items": [
+            {
+              "id": "margherita-pizza",
+              "name": "Margherita Pizza",
+              "description": "San Marzano tomato, mozzarella, and basil",
+              "price": "$18",
+              "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "chicken-parmigiana",
+              "name": "Chicken Parmigiana",
+              "description": "Breaded chicken, tomato sauce, and parmesan",
+              "price": "$26",
+              "imageUrl": "https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "desserts",
+          "label": "Desserts",
+          "items": [
+            {
+              "id": "tiramisu",
+              "name": "Classic Tiramisu",
+              "description": "Espresso, mascarpone, and cocoa",
+              "price": "$10",
+              "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "panna-cotta",
+              "name": "Vanilla Panna Cotta",
+              "description": "Vanilla cream with berry compote",
+              "price": "$9",
+              "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-trattoria-roma",
+      "restaurantId": "trattoria-roma",
+      "categories": [
+        {
+          "id": "pizza",
+          "label": "Pizza",
+          "items": [
+            {
+              "id": "roma-margherita",
+              "name": "Roma Margherita",
+              "description": "Tomato, buffalo mozzarella, and basil",
+              "price": "$16",
+              "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "diavola",
+              "name": "Pizza Diavola",
+              "description": "Spicy salami, mozzarella, and chili",
+              "price": "$19",
+              "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "pasta",
+          "label": "Pasta",
+          "items": [
+            {
+              "id": "carbonara",
+              "name": "Spaghetti Carbonara",
+              "description": "Guanciale, egg, pecorino, and black pepper",
+              "price": "$18",
+              "imageUrl": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "lasagna",
+              "name": "Beef Lasagna",
+              "description": "Slow-cooked beef ragù and béchamel",
+              "price": "$20",
+              "imageUrl": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-sakura-table",
+      "restaurantId": "sakura-table",
+      "categories": [
+        {
+          "id": "sushi",
+          "label": "Sushi",
+          "items": [
+            {
+              "id": "sakura-set",
+              "name": "Sakura Sushi Set",
+              "description": "Chef selection of nigiri and maki",
+              "price": "$32",
+              "imageUrl": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "salmon-roll",
+              "name": "Salmon Avocado Roll",
+              "description": "Fresh salmon, avocado, and sesame",
+              "price": "$16",
+              "imageUrl": "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "hot-dishes",
+          "label": "Hot Dishes",
+          "items": [
+            {
+              "id": "miso-cod",
+              "name": "Miso Black Cod",
+              "description": "Marinated cod with seasonal vegetables",
+              "price": "$29",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "wagyu-don",
+              "name": "Wagyu Rice Bowl",
+              "description": "Seared wagyu, rice, and onsen egg",
+              "price": "$34",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-saigon-garden",
+      "restaurantId": "saigon-garden",
+      "categories": [
+        {
+          "id": "favorites",
+          "label": "Favorites",
+          "items": [
+            {
+              "id": "pho-bo",
+              "name": "Phở Bò",
+              "description": "Beef noodle soup with herbs and lime",
+              "price": "$12",
+              "imageUrl": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "bun-cha",
+              "name": "Bún Chả",
+              "description": "Grilled pork, rice noodles, and dipping sauce",
+              "price": "$13",
+              "imageUrl": "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "label": "Sharing",
+          "items": [
+            {
+              "id": "fresh-rolls",
+              "name": "Fresh Spring Rolls",
+              "description": "Prawn, herbs, noodles, and peanut sauce",
+              "price": "$8",
+              "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "banh-xeo",
+              "name": "Bánh Xèo",
+              "description": "Crispy turmeric pancake with pork and prawn",
+              "price": "$14",
+              "imageUrl": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-maison-lumiere",
+      "restaurantId": "maison-lumiere",
+      "categories": [
+        {
+          "id": "starters",
+          "label": "Starters",
+          "items": [
+            {
+              "id": "onion-soup",
+              "name": "French Onion Soup",
+              "description": "Caramelized onion, beef broth, and gruyère",
+              "price": "$16",
+              "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "foie-gras",
+              "name": "Foie Gras",
+              "description": "Duck foie gras, brioche, and fig",
+              "price": "$28",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "mains",
+          "label": "Mains",
+          "items": [
+            {
+              "id": "duck-confit",
+              "name": "Duck Confit",
+              "description": "Crispy duck leg, potato, and red wine jus",
+              "price": "$42",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "beef-bourguignon",
+              "name": "Beef Bourguignon",
+              "description": "Braised beef, mushroom, and pearl onion",
+              "price": "$46",
+              "imageUrl": "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-taco-local",
+      "restaurantId": "taco-local",
+      "categories": [
+        {
+          "id": "tacos",
+          "label": "Tacos",
+          "items": [
+            {
+              "id": "al-pastor",
+              "name": "Tacos Al Pastor",
+              "description": "Marinated pork, pineapple, onion, and cilantro",
+              "price": "$10",
+              "imageUrl": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "fish-tacos",
+              "name": "Baja Fish Tacos",
+              "description": "Crispy fish, cabbage, and lime crema",
+              "price": "$12",
+              "imageUrl": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "sides",
+          "label": "Sides",
+          "items": [
+            {
+              "id": "guacamole",
+              "name": "Fresh Guacamole",
+              "description": "Avocado, lime, tomato, and tortilla chips",
+              "price": "$8",
+              "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "elote",
+              "name": "Street Corn",
+              "description": "Grilled corn, cotija, chili, and lime",
+              "price": "$7",
+              "imageUrl": "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-green-table",
+      "restaurantId": "green-table",
+      "categories": [
+        {
+          "id": "bowls",
+          "label": "Bowls",
+          "items": [
+            {
+              "id": "green-bowl",
+              "name": "Green Goddess Bowl",
+              "description": "Quinoa, avocado, kale, and tahini",
+              "price": "$14",
+              "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "tofu-bowl",
+              "name": "Sesame Tofu Bowl",
+              "description": "Tofu, brown rice, vegetables, and sesame",
+              "price": "$15",
+              "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "small-plates",
+          "label": "Small Plates",
+          "items": [
+            {
+              "id": "hummus",
+              "name": "Beetroot Hummus",
+              "description": "Roasted beetroot hummus and flatbread",
+              "price": "$9",
+              "imageUrl": "https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "mushroom-toast",
+              "name": "Wild Mushroom Toast",
+              "description": "Sourdough, mushrooms, and herb cream",
+              "price": "$11",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-ember-steakhouse",
+      "restaurantId": "ember-steakhouse",
+      "categories": [
+        {
+          "id": "steaks",
+          "label": "Steaks",
+          "items": [
+            {
+              "id": "ribeye",
+              "name": "Prime Ribeye",
+              "description": "300g prime ribeye with peppercorn sauce",
+              "price": "$58",
+              "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "tenderloin",
+              "name": "Beef Tenderloin",
+              "description": "250g tenderloin with red wine jus",
+              "price": "$62",
+              "imageUrl": "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "sides",
+          "label": "Sides",
+          "items": [
+            {
+              "id": "truffle-mash",
+              "name": "Truffle Mash",
+              "description": "Creamy potato, black truffle, and chive",
+              "price": "$12",
+              "imageUrl": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "creamed-spinach",
+              "name": "Creamed Spinach",
+              "description": "Baby spinach, cream, and parmesan",
+              "price": "$10",
+              "imageUrl": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-le-petit-jardin",
+      "restaurantId": "le-petit-jardin",
+      "categories": [
+        {
+          "id": "starters",
+          "label": "Starters",
+          "items": [
+            {
+              "id": "onion-soup",
+              "name": "French Onion Soup",
+              "description": "Caramelized onion broth with gruyère crouton",
+              "price": "$12",
+              "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "burrata-salad",
+              "name": "Garden Burrata",
+              "description": "Heirloom tomato, basil and burrata",
+              "price": "$14",
+              "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "mains",
+          "label": "Mains",
+          "items": [
+            {
+              "id": "duck-a-lorange",
+              "name": "Duck à l'Orange",
+              "description": "Roast duck breast with orange glaze",
+              "price": "$32",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "steak-frites",
+              "name": "Steak Frites",
+              "description": "Grilled sirloin with herb butter and fries",
+              "price": "$29",
+              "imageUrl": "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-azure-terrace",
+      "restaurantId": "azure-terrace",
+      "categories": [
+        {
+          "id": "seafood",
+          "label": "Seafood",
+          "items": [
+            {
+              "id": "grilled-octopus",
+              "name": "Grilled Octopus",
+              "description": "Charred octopus with lemon and olive oil",
+              "price": "$26",
+              "imageUrl": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "seafood-linguine",
+              "name": "Seafood Linguine",
+              "description": "Clams, prawns and mussels in white wine",
+              "price": "$30",
+              "imageUrl": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "desserts",
+          "label": "Desserts",
+          "items": [
+            {
+              "id": "lemon-tart",
+              "name": "Lemon Tart",
+              "description": "Zesty lemon curd in buttery pastry",
+              "price": "$10",
+              "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-kaze-ramen",
+      "restaurantId": "kaze-ramen",
+      "categories": [
+        {
+          "id": "ramen",
+          "label": "Ramen",
+          "items": [
+            {
+              "id": "tonkotsu-ramen",
+              "name": "Tonkotsu Ramen",
+              "description": "Creamy pork broth, chashu and soft egg",
+              "price": "$14",
+              "imageUrl": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "miso-ramen",
+              "name": "Miso Ramen",
+              "description": "Rich miso broth with corn and butter",
+              "price": "$13",
+              "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "sides",
+          "label": "Sides",
+          "items": [
+            {
+              "id": "gyoza",
+              "name": "Pan-fried Gyoza",
+              "description": "Crispy pork and cabbage dumplings",
+              "price": "$7",
+              "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-hanami-izakaya",
+      "restaurantId": "hanami-izakaya",
+      "categories": [
+        {
+          "id": "skewers",
+          "label": "Skewers",
+          "items": [
+            {
+              "id": "chicken-yakitori",
+              "name": "Chicken Yakitori",
+              "description": "Grilled chicken thigh with tare glaze",
+              "price": "$9",
+              "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "beef-kushiyaki",
+              "name": "Beef Kushiyaki",
+              "description": "Grilled beef skewers with sea salt",
+              "price": "$14",
+              "imageUrl": "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "small-plates",
+          "label": "Small Plates",
+          "items": [
+            {
+              "id": "salmon-sashimi",
+              "name": "Salmon Sashimi",
+              "description": "Fresh sliced salmon with wasabi",
+              "price": "$16",
+              "imageUrl": "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "agedashi-tofu",
+              "name": "Agedashi Tofu",
+              "description": "Crispy tofu in dashi broth",
+              "price": "$8",
+              "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-pho-ha-noi-house",
+      "restaurantId": "pho-ha-noi-house",
+      "categories": [
+        {
+          "id": "noodles",
+          "label": "Noodles",
+          "items": [
+            {
+              "id": "pho-bo-tai",
+              "name": "Phở Bò Tái",
+              "description": "Rare beef noodle soup with fresh herbs",
+              "price": "$8",
+              "imageUrl": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "pho-ga",
+              "name": "Phở Gà",
+              "description": "Chicken noodle soup, gentle and fragrant",
+              "price": "$7",
+              "imageUrl": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "sides",
+          "label": "Sides",
+          "items": [
+            {
+              "id": "quay",
+              "name": "Quẩy",
+              "description": "Crispy fried dough for dipping",
+              "price": "$2",
+              "imageUrl": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "goi-cuon",
+              "name": "Gỏi Cuốn",
+              "description": "Fresh shrimp spring rolls",
+              "price": "$5",
+              "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-little-seoul-bbq",
+      "restaurantId": "little-seoul-bbq",
+      "categories": [
+        {
+          "id": "bbq",
+          "label": "BBQ",
+          "items": [
+            {
+              "id": "pork-belly",
+              "name": "Samgyeopsal",
+              "description": "Grilled pork belly with lettuce wraps",
+              "price": "$18",
+              "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "bulgogi",
+              "name": "Beef Bulgogi",
+              "description": "Marinated sweet soy beef",
+              "price": "$20",
+              "imageUrl": "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "sides",
+          "label": "Sides",
+          "items": [
+            {
+              "id": "kimchi-pancake",
+              "name": "Kimchi Pancake",
+              "description": "Crispy savory pancake to share",
+              "price": "$9",
+              "imageUrl": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-lotus-leaf-vegan",
+      "restaurantId": "lotus-leaf-vegan",
+      "categories": [
+        {
+          "id": "favorites",
+          "label": "Favorites",
+          "items": [
+            {
+              "id": "vegan-pho",
+              "name": "Vegan Phở",
+              "description": "Mushroom broth with tofu and herbs",
+              "price": "$8",
+              "imageUrl": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "lotus-rice",
+              "name": "Lotus Leaf Rice",
+              "description": "Steamed rice with lotus seeds and mushrooms",
+              "price": "$9",
+              "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "small-plates",
+          "label": "Small Plates",
+          "items": [
+            {
+              "id": "veggie-rolls",
+              "name": "Veggie Spring Rolls",
+              "description": "Rice paper rolls with tofu and herbs",
+              "price": "$5",
+              "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-bloom-bowl",
+      "restaurantId": "bloom-bowl",
+      "categories": [
+        {
+          "id": "bowls",
+          "label": "Bowls",
+          "items": [
+            {
+              "id": "quinoa-bowl",
+              "name": "Rainbow Quinoa Bowl",
+              "description": "Quinoa, roasted veggies and tahini",
+              "price": "$12",
+              "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=200&q=80"
+            },
+            {
+              "id": "tofu-poke",
+              "name": "Tofu Poke Bowl",
+              "description": "Marinated tofu, edamame and avocado",
+              "price": "$13",
+              "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        },
+        {
+          "id": "drinks",
+          "label": "Drinks",
+          "items": [
+            {
+              "id": "green-juice",
+              "name": "Green Juice",
+              "description": "Cold-pressed kale, apple and ginger",
+              "price": "$6",
+              "imageUrl": "https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=200&q=80"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

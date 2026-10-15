@@ -1,0 +1,37 @@
+{
+  "name": "@repo/agent",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "mastra dev",
+    "build": "PNPM_CONFIG_STRICT_DEP_BUILDS=false mastra build",
+    "deploy": "pnpm run build && PNPM_CONFIG_STRICT_DEP_BUILDS=false mastra deploy --skip-build --env production --env-file .env --skip-preflight",
+    "start": "mastra start",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"tests/**/*.test.mjs\""
+  },
+  "dependencies": {
+    "@ag-ui/client": "^0.0.59",
+    "@ag-ui/core": "^0.0.59",
+    "@ag-ui/mastra": "1.1.4",
+    "@ag-ui/mcp-apps-middleware": "0.0.3",
+    "@copilotkit/runtime": "1.66.4",
+    "@mastra/client-js": "1.31.0",
+    "@mastra/core": "1.50.0",
+    "@mastra/libsql": "1.15.1",
+    "@mastra/memory": "1.22.1",
+    "@mastra/observability": "1.16.0",
+    "@repo/shared": "workspace:*",
+    "ai": "^5.0.112",
+    "jsonwebtoken": "8.5.1",
+    "openai": "4.104.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.0.1",
+    "mastra": "1.18.1",
+    "typescript": "~5.9.3"
+  }
+}

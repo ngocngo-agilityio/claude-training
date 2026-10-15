@@ -1,0 +1,12 @@
+{
+  "name": "@repo/mock-api",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "json-server-auth db.json -r routes.json --port 3001 --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "json-server": "0.17.4",
+    "json-server-auth": "2.1.0"
+  }
+}
