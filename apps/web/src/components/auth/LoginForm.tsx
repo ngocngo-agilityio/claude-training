@@ -69,7 +69,6 @@ export const LoginForm = ({
         <Controller
           control={control}
           name="email"
-          rules={LOGIN_VALIDATION_RULES.email}
           render={({
             field: { onChange, ...inputProps },
             fieldState: { error },
