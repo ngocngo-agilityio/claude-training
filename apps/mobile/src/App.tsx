@@ -1,5 +1,7 @@
 import {
   PlusJakartaSans_400Regular,
+  PlusJakartaSans_600SemiBold,
+  PlusJakartaSans_700Bold,
   PlusJakartaSans_800ExtraBold,
   useFonts,
 } from "@expo-google-fonts/plus-jakarta-sans";
@@ -8,20 +10,28 @@ import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
 import * as NativeSplash from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { configureApi } from "@repo/shared/config/api";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
 import { RESTAURANT_CHAT_SUGGESTIONS } from "@repo/shared/constants/suggestions";
-import { login } from "@repo/shared/services/auth-service";
 import { SplashScreen } from "@/components/SplashScreen";
 import { MASTRA_BASE_URL, RESTAURANTS_API_DOMAIN } from "@/constants/api";
 import { THEMES } from "@/constants/theme";
+import { LoginScreen } from "@/screens/LoginScreen";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 
 // Keep the native splash up until the in-app splash is drawn over it.
 NativeSplash.preventAutoHideAsync().catch(() => undefined);
+
+// Without these, requests go to relative URLs and only fail with a generic
+// error, so point the developer at the missing config.
+if (__DEV__ && (!MASTRA_BASE_URL || !RESTAURANTS_API_DOMAIN)) {
+  console.warn(
+    "EXPO_PUBLIC_MASTRA_BASE_URL or EXPO_PUBLIC_RESTAURANTS_API_DOMAIN is missing, see .env.example",
+  );
+}
 
 // Shared services read their endpoints from this config instead of Expo's env.
 configureApi({
@@ -29,8 +39,8 @@ configureApi({
   restaurantsApiDomain: RESTAURANTS_API_DOMAIN,
 });
 
-// TODO: Temporary screen to test the CopilotKit integration (sign in, chat,
-// switch threads). Replace it with the real login and chat screens.
+// TODO: Temporary screen to test the CopilotKit integration (chat, switch
+// threads). Replace it with the real chat screen.
 
 // Two threads for this app session, to check switching between them.
 const THREADS = ["Thread A", "Thread B"].map((name) => ({
@@ -93,45 +103,15 @@ const TestChat = ({ threadId }: TestChatProps) => {
 };
 
 const TestScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const [error, setError] = useState("");
   const [threadId, setThreadId] = useState(THREADS[0].id);
 
   // The agent rejects requests without a user token, so sign in first.
-  const handleLogin = async () => {
-    const result = await login({ email, password });
-
-    if (result.success) {
-      setAccessToken(result.data.accessToken);
-    } else {
-      setError(result.error);
-    }
-  };
-
   if (!accessToken) {
     return (
-      <View style={styles.screen}>
-        <Text>Runtime: {MASTRA_BASE_URL || "missing, see .env.example"}</Text>
-        <TextInput
-          autoCapitalize="none"
-          keyboardType="email-address"
-          onChangeText={setEmail}
-          placeholder="Email"
-          style={styles.input}
-          value={email}
-        />
-        <TextInput
-          onChangeText={setPassword}
-          placeholder="Password"
-          secureTextEntry
-          style={styles.input}
-          value={password}
-        />
-        {error ? <Text>{error}</Text> : null}
-        <Button onPress={handleLogin} title="Sign in" />
-      </View>
+      <LoginScreen
+        onLoginSuccess={(data) => setAccessToken(data.accessToken)}
+      />
     );
   }
 
@@ -173,6 +153,8 @@ const AppContent = () => {
 export const App = () => {
   const [areFontsLoaded, fontError] = useFonts({
     PlusJakartaSans_400Regular,
+    PlusJakartaSans_600SemiBold,
+    PlusJakartaSans_700Bold,
     PlusJakartaSans_800ExtraBold,
   });
 
@@ -203,11 +185,5 @@ const styles = StyleSheet.create({
   threads: {
     flexDirection: "row",
     gap: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e2e8f0",
-    borderRadius: 8,
-    padding: 12,
   },
 });

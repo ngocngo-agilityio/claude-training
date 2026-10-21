@@ -22,9 +22,14 @@ export const login = async (payload: LoginFormValues): Promise<LoginResult> => {
     let message = ERROR_MESSAGES.LOGIN_FAILED;
 
     if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
       const responseData: unknown = error.response?.data;
 
-      if (typeof responseData === "string") {
+      // Rejected credentials get one generic message, so the UI never shows
+      // raw API text such as "Cannot find user" or reveals which emails exist.
+      if (status === 400 || status === 401) {
+        message = ERROR_MESSAGES.LOGIN_FAILED;
+      } else if (typeof responseData === "string") {
         message = responseData;
       } else if (
         responseData &&
