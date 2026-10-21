@@ -1,16 +1,27 @@
+import {
+  PlusJakartaSans_400Regular,
+  PlusJakartaSans_800ExtraBold,
+  useFonts,
+} from "@expo-google-fonts/plus-jakarta-sans";
 import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
+import * as NativeSplash from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { configureApi } from "@repo/shared/config/api";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
 import { RESTAURANT_CHAT_SUGGESTIONS } from "@repo/shared/constants/suggestions";
 import { login } from "@repo/shared/services/auth-service";
+import { SplashScreen } from "@/components/SplashScreen";
 import { MASTRA_BASE_URL, RESTAURANTS_API_DOMAIN } from "@/constants/api";
+import { THEMES } from "@/constants/theme";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider";
+import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
+
+// Keep the native splash up until the in-app splash is drawn over it.
+NativeSplash.preventAutoHideAsync().catch(() => undefined);
 
 // Shared services read their endpoints from this config instead of Expo's env.
 configureApi({
@@ -144,13 +155,35 @@ const TestScreen = () => {
   );
 };
 
+/** The app screen, with the splash drawn over it until it fades away. */
+const AppContent = () => {
+  const { theme } = useTheme();
+  const [isSplashVisible, setIsSplashVisible] = useState(true);
+  const handleSplashFinish = useCallback(() => setIsSplashVisible(false), []);
+
+  return (
+    <>
+      <TestScreen />
+      {isSplashVisible && <SplashScreen onFinish={handleSplashFinish} />}
+      <StatusBar style={theme === THEMES.DARK ? "light" : "dark"} />
+    </>
+  );
+};
+
 export const App = () => {
+  const [areFontsLoaded, fontError] = useFonts({
+    PlusJakartaSans_400Regular,
+    PlusJakartaSans_800ExtraBold,
+  });
+
+  // The native splash stays up while the fonts load.
+  if (!areFontsLoaded && !fontError) return null;
+
   return (
     // The prebuilt CopilotKit chat components need the gesture handler root.
     <GestureHandlerRootView style={styles.root}>
       <ThemeProvider>
-        <TestScreen />
-        <StatusBar style="auto" />
+        <AppContent />
       </ThemeProvider>
     </GestureHandlerRootView>
   );
