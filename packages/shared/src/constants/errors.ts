@@ -11,6 +11,8 @@ export const ERROR_MESSAGES = {
   ASSISTANT_UNAVAILABLE:
     "The assistant can't handle requests right now. Please try again later.",
   FIELD_REQUIRED: (fieldName: string) => `${fieldName} is required.`,
+  EMAIL_REQUIRED: "Please enter your email",
+  PASSWORD_REQUIRED: "Please enter your password",
   EMAIL_INVALID: "Email is invalid.",
   PASSWORD_MIN_LENGTH: "Password must be at least 6 characters.",
   LOGIN_FAILED: "Email or password is incorrect.",
