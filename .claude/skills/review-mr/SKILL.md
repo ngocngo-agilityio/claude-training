@@ -1,6 +1,6 @@
 ---
 name: review-mr
-description: Review a GitLab merge request (or the current branch's diff) against the ui-dojo team rules in AGENTS.md - correctness, the never-do list, code style, tests, commit and MR conventions. Use when asked to review an MR or PR (e.g. "review MR !7"), or to check a branch before it is merged.
+description: Review a GitLab merge request (or the current branch's diff) against the team rules in AGENTS.md - correctness, the never-do list, code style, tests, commit and MR conventions. Use when asked to review an MR or PR (e.g. "review MR !7"), or to check a branch before it is merged.
 ---
 
 # Review a merge request
