@@ -56,6 +56,7 @@ type TestChatProps = {
 const TestChat = ({ threadId }: TestChatProps) => {
   const [isConnected, setIsConnected] = useState(false);
   const { copilotkit } = useCopilotKit();
+  const { colors } = useTheme();
 
   // CopilotChat has no thread prop. Registering a private agent for this
   // thread and passing its ID as `agentName` scopes the chat to the thread.
@@ -86,7 +87,9 @@ const TestChat = ({ threadId }: TestChatProps) => {
   }, [agent, copilotkit, isReady]);
 
   // A message sent before the thread is connected is lost.
-  if (!isConnected) return <Text>Connecting…</Text>;
+  if (!isConnected) {
+    return <Text style={{ color: colors.mutedForeground }}>Connecting…</Text>;
+  }
 
   return (
     <CopilotChat
@@ -105,6 +108,7 @@ const TestChat = ({ threadId }: TestChatProps) => {
 const TestScreen = () => {
   const [accessToken, setAccessToken] = useState("");
   const [threadId, setThreadId] = useState(THREADS[0].id);
+  const { colors } = useTheme();
 
   // The agent rejects requests without a user token, so sign in first.
   if (!accessToken) {
@@ -116,7 +120,7 @@ const TestScreen = () => {
   }
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
       <View style={styles.threads}>
         {THREADS.map(({ id, name }) => (
           <Button
@@ -180,7 +184,6 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 16,
     paddingTop: 64,
-    backgroundColor: "#ffffff",
   },
   threads: {
     flexDirection: "row",
