@@ -32,3 +32,6 @@ apps/agent/src/mastra/public/*.db*
 
 # Turborepo
 .turbo
+
+# Claude worktrees
+.claude/worktrees
