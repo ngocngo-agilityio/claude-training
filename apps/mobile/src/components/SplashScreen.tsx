@@ -46,12 +46,14 @@ const SPLASH_COLORS = {
     background: "#fbf7f3",
     foreground: "#1c1917",
     mutedForeground: "#57534e",
+    brand: lightColors.brand,
     glow: "rgba(249, 115, 22, 0.20)",
   },
   [THEMES.DARK]: {
     background: darkColors.background,
     foreground: darkColors.foreground,
     mutedForeground: darkColors.mutedForeground,
+    brand: darkColors.brand,
     glow: "rgba(255, 124, 37, 0.28)",
   },
 };
@@ -67,6 +69,8 @@ type UseSplashAnimationOptions = {
 };
 
 type LoadingDotProps = {
+  /** Fill color; the theme's brand color. */
+  color: string;
   delay: number;
 };
 
@@ -165,7 +169,7 @@ const useSplashAnimation = ({
 };
 
 /** One of the three loading dots; it pulses in a loop after `delay`. */
-const LoadingDot = ({ delay }: LoadingDotProps) => {
+const LoadingDot = ({ color, delay }: LoadingDotProps) => {
   const opacity = useSharedValue(0.25);
 
   useEffect(() => {
@@ -185,7 +189,9 @@ const LoadingDot = ({ delay }: LoadingDotProps) => {
 
   const dotStyle = useAnimatedStyle(() => ({ opacity: opacity.get() }));
 
-  return <Animated.View style={[styles.dot, dotStyle]} />;
+  return (
+    <Animated.View style={[styles.dot, { backgroundColor: color }, dotStyle]} />
+  );
 };
 
 /**
@@ -253,7 +259,7 @@ export const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         style={[styles.dots, contentStyle]}
       >
         {DOT_DELAYS_MS.map((delay) => (
-          <LoadingDot delay={delay} key={delay} />
+          <LoadingDot color={colors.brand} delay={delay} key={delay} />
         ))}
       </Animated.View>
     </Animated.View>
@@ -314,6 +320,5 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: lightColors.brand,
   },
 });
