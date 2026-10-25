@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
 import { Controller, useForm, useWatch } from "react-hook-form";
+import { ERROR_MESSAGES } from "@repo/shared/constants/errors";
 import {
   LOGIN_FORM_DEFAULT_VALUES,
   LOGIN_VALIDATION_RULES,
@@ -82,7 +83,10 @@ export const LoginForm = ({
       <Controller
         control={control}
         name="email"
-        rules={LOGIN_VALIDATION_RULES.email}
+        rules={{
+          ...LOGIN_VALIDATION_RULES.email,
+          required: ERROR_MESSAGES.EMAIL_REQUIRED,
+        }}
         render={({ field: { onChange, ...field }, fieldState: { error } }) => (
           <TextField
             {...field}
@@ -107,7 +111,10 @@ export const LoginForm = ({
       <Controller
         control={control}
         name="password"
-        rules={LOGIN_VALIDATION_RULES.password}
+        rules={{
+          ...LOGIN_VALIDATION_RULES.password,
+          required: ERROR_MESSAGES.PASSWORD_REQUIRED,
+        }}
         render={({ field: { onChange, ...field }, fieldState: { error } }) => (
           <TextField
             {...field}
