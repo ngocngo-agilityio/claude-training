@@ -3,7 +3,7 @@
 cmd=$(jq -r '.tool_input.command // empty')
 
 # Check only the executed part: drop quoted text such as commit messages
-code=$(printf '%s' "$cmd" | sed -E "s/\"[^\"]*\"//g; s/'[^']*'//g")
+code=$(printf '%s' "$cmd" | tr '\n' ' ' | sed -E "s/\"[^\"]*\"//g; s/'[^']*'//g")
 
 if echo "$code" | grep -Eq -- '--no-verify'; then
   echo "Blocked: do not use --no-verify. Run 'pnpm run typecheck' and 'pnpm run lint', fix errors, then commit." >&2
