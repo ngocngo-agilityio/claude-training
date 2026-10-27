@@ -1,10 +1,10 @@
-# Checklist review PR
+# PR Review Checklist
 
-Dùng để kiểm tra nhanh một PR trước khi merge.
+Use this checklist for a quick check before merging a PR.
 
-- [ ] Mục tiêu PR được mô tả rõ trong phần mô tả.
-- [ ] Thay đổi chỉ gồm những file cần thiết cho mục tiêu.
-- [ ] Không có secret, key hoặc URL cứng trong code.
-- [ ] Đã chạy `pnpm run typecheck` và `pnpm run lint`.
-- [ ] Có test cho logic mới, hoặc giải thích vì sao không cần.
-- [ ] Tên branch và commit theo Conventional Commits.
+- [ ] The PR goal is clearly described in the description.
+- [ ] The changes include only the files needed for that goal.
+- [ ] No secrets, keys, or hardcoded URLs appear in the code.
+- [ ] `pnpm run typecheck` and `pnpm run lint` pass.
+- [ ] New logic has tests, or the PR explains why they are not needed.
+- [ ] Branch and commit names follow Conventional Commits.
