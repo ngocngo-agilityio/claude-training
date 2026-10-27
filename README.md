@@ -164,6 +164,12 @@ Husky installs two Git hooks when you run `pnpm install`:
   [Conventional Commits](https://www.conventionalcommits.org), for example
   `feat: add restaurant carousel` or `fix: handle expired session`.
 
+### Claude review on GitHub
+
+The `.github/workflows/claude.yml` workflow runs Claude Code when a comment,
+review or issue contains `@claude`. To get a review on a pull request, comment
+`@claude review` on it and wait for the **Claude Code** run in the Actions tab.
+
 ## Learn More
 
 - [Mastra Documentation](https://mastra.ai/docs)
