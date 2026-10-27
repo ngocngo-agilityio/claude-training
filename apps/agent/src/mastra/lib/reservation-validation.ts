@@ -118,6 +118,13 @@ export const validateReservationDetails = async ({
         ),
       } satisfies ToolResult<ReserveRestaurantData>;
 
+    // If the number of guests was provided, it must be at least one.
+    if (guests !== undefined && guests < 1)
+      return {
+        success: false,
+        error: ERROR_MESSAGES.RESERVATION_GUEST_COUNT_INVALID,
+      } satisfies ToolResult<ReserveRestaurantData>;
+
     // If the number of guests was provided, check the restaurant's limit.
     if (guests && guests > restaurant.maximumReservationGuests)
       return {

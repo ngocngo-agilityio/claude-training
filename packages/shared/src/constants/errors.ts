@@ -32,6 +32,7 @@ export const ERROR_MESSAGES = {
     "That time has already passed today. Please choose a later time today or another date.",
   RESERVATION_DATE_UNAVAILABLE: (firstDate: string, lastDate: string) =>
     `Reservations are available only from ${firstDate} through ${lastDate}.`,
+  RESERVATION_GUEST_COUNT_INVALID: "Please choose at least 1 guest.",
   RESERVATION_GUEST_LIMIT_EXCEEDED: (
     restaurantName: string,
     maximumGuests: number,
