@@ -8,7 +8,7 @@ import App from "./App.tsx";
 // Shared services read their endpoints from this config instead of Vite's env.
 configureApi({
   mastraBaseUrl: import.meta.env.VITE_MASTRA_BASE_URL,
-  restaurantsApiDomain: import.meta.env.VITE_RESTAURANTS_API_DOMAIN,
+  restaurantsApiDomain: "http://localhost:3001",
   // Clear the saved login when the server rejects an expired or invalid token.
   onUnauthorized: () => useAuthStore.getState().clearAuth(),
 });
