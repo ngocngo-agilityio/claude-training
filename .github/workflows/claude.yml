@@ -1,70 +1,50 @@
-# Workflow name shown in the GitHub Actions tab
 name: Claude Code
 
-# Events that trigger this workflow.
-# The workflow runs when someone comments on an issue or PR, reviews a PR,
-# or opens/gets assigned an issue. The job below only runs if the text
-# contains "@claude" (see the `if` condition).
 on:
-  # A new comment on an issue or a pull request conversation
   issue_comment:
     types: [created]
-  # A new inline comment on a line of a pull request diff
   pull_request_review_comment:
     types: [created]
-  # A review (approve / request changes / comment) submitted on a pull request
-  pull_request_review:
-    types: [submitted]
-  # A new issue opened, or an issue assigned to someone
   issues:
     types: [opened, assigned]
-
-# Concurrency control: only one Claude run per issue/PR at a time
-concurrency:
-  # Group key: the issue or PR number if the event has one, otherwise the unique run ID.
-  # Runs on the same issue/PR share a group and queue up behind each other.
-  group: claude-${{ github.event.issue.number || github.event.pull_request.number || github.run_id }}
-  # false: a new run waits for the running one to finish instead of cancelling it,
-  # so Claude does not stop halfway through a change.
-  cancel-in-progress: false
+  pull_request_review:
+    types: [submitted]
 
 jobs:
-  # Single job that runs the Claude Code action
   claude:
-    # Maximum run time for this job. If it runs longer than 30 minutes,
-    # GitHub cancels it, which prevents a stuck run from using runner minutes for hours.
-    timeout-minutes: 30
-    # Only run the job when "@claude" is mentioned in the triggering text.
-    # Each line checks one event type and looks at the matching text field.
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
-    # Use a GitHub-hosted Linux runner
     runs-on: ubuntu-latest
-    # Permissions granted to the GITHUB_TOKEN for this job (least privilege)
     permissions:
-      # Read repository code (no write access to contents)
       contents: read
-      # Comment on and update pull requests
-      pull-requests: write
-      # Comment on and update issues
-      issues: write
-      # Request an OIDC token, needed by the action for authentication
+      pull-requests: read
+      issues: read
       id-token: write
+      actions: read # Required for Claude to read CI results on PRs
     steps:
-      # Step 1: download the repository code into the runner
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Fetch only the latest commit (shallow clone) to save time
           fetch-depth: 1
 
-      # Step 2: run Claude Code through the official GitHub Action
       - name: Run Claude Code
+        id: claude
         uses: anthropics/claude-code-action@v1
         with:
-          # Anthropic API key, read from the repository secret named ANTHROPIC_API_KEY.
-          # Never hardcode the key in this file.
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          # This is an optional setting that allows Claude to read CI results on PRs
+          additional_permissions: |
+            actions: read
+
+          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
+          # prompt: 'Update the pull request description to include a summary of changes.'
+
+          # Optional: Add claude_args to customize behavior and configuration
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://code.claude.com/docs/en/cli-reference for available options
+          # claude_args: '--allowed-tools Bash(gh pr *)'
+
