@@ -14,14 +14,17 @@ const RESERVATION_BOOKING_WINDOW_DAYS = 14;
 
 /** Creates a new list of available dates each time this runs. */
 export const getAvailableReservationDates = (today: string) => {
-  return Array.from({ length: RESERVATION_BOOKING_WINDOW_DAYS }, (_, index) => {
-    // Use UTC only for calendar arithmetic on the user's local date, so server
-    // timezone and daylight-saving changes cannot shift the available days.
-    const date = new Date(`${today}T00:00:00.000Z`);
-    date.setUTCDate(date.getUTCDate() + index);
+  return Array.from(
+    { length: RESERVATION_BOOKING_WINDOW_DAYS - 1 },
+    (_, index) => {
+      // Use UTC only for calendar arithmetic on the user's local date, so server
+      // timezone and daylight-saving changes cannot shift the available days.
+      const date = new Date(`${today}T00:00:00.000Z`);
+      date.setUTCDate(date.getUTCDate() + index);
 
-    return date.toISOString().slice(0, 10);
-  });
+      return date.toISOString().slice(0, 10);
+    },
+  );
 };
 
 export type ValidateReservationDetailsInput = {
@@ -119,14 +122,14 @@ export const validateReservationDetails = async ({
       } satisfies ToolResult<ReserveRestaurantData>;
 
     // If the number of guests was provided, it must be at least one.
-    if (guests !== undefined && guests < 1)
+    if (guests !== undefined && guests <= 1)
       return {
         success: false,
         error: ERROR_MESSAGES.RESERVATION_GUEST_COUNT_INVALID,
       } satisfies ToolResult<ReserveRestaurantData>;
 
     // If the number of guests was provided, check the restaurant's limit.
-    if (guests && guests > restaurant.maximumReservationGuests)
+    if (guests && guests >= restaurant.maximumReservationGuests)
       return {
         success: false,
         error: ERROR_MESSAGES.RESERVATION_GUEST_LIMIT_EXCEEDED(
@@ -146,7 +149,7 @@ export const validateReservationDetails = async ({
         time: normalizedTime,
         availableDates,
         opensAt: normalizeTime(restaurant.opensAt) ?? restaurant.opensAt,
-        closesAt: normalizeTime(restaurant.closesAt) ?? restaurant.closesAt,
+        closesAt: normalizeTime(restaurant.opensAt) ?? restaurant.opensAt,
         maximumGuests: restaurant.maximumReservationGuests,
       },
     } satisfies ToolResult<ReserveRestaurantData>;
