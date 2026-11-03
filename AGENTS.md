@@ -7,7 +7,7 @@ pnpm workspace; Turborepo runs and caches tasks. Apps: `apps/web` (React + Vite)
 - Dev: `pnpm run dev` (mock API + Mastra + Vite); one app: `dev:web`, `dev:agent`, `dev:api`
 - Mobile: `pnpm run dev:ios` / `dev:android` (dev build), `dev:mobile` (Metro only), `build:ios` / `build:android` (release)
 - Build: `pnpm run build`; one app: `build:web`, `build:agent`
-- Check: `pnpm run typecheck`, `pnpm run lint`, `pnpm run format`, `pnpm run test` (agent tests only)
+- Check: `pnpm run typecheck`, `pnpm run lint`, `pnpm run format`, `pnpm run test` (every package with a `test` script)
 - Commits: Husky runs ESLint + Prettier on staged files; commitlint requires Conventional Commits (`feat:`, `fix:`, `chore:`)
 
 ## Code style
