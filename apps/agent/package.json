@@ -9,7 +9,7 @@
     "deploy": "pnpm run build && PNPM_CONFIG_STRICT_DEP_BUILDS=false mastra deploy --skip-build --env production --env-file .env --skip-preflight",
     "start": "mastra start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test \"tests/**/*.test.mjs\""
+    "test": "node --import ./tests/helpers/register-ts-resolver.mjs --test \"tests/**/*.test.mjs\""
   },
   "dependencies": {
     "@ag-ui/client": "^0.0.59",
