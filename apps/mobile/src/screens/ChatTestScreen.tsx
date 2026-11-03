@@ -1,43 +1,12 @@
-import {
-  PlusJakartaSans_400Regular,
-  PlusJakartaSans_600SemiBold,
-  PlusJakartaSans_700Bold,
-  PlusJakartaSans_800ExtraBold,
-  useFonts,
-} from "@expo-google-fonts/plus-jakarta-sans";
 import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
-import * as NativeSplash from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { configureApi } from "@repo/shared/config/api";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
 import { RESTAURANT_CHAT_SUGGESTIONS } from "@repo/shared/constants/suggestions";
-import { SplashScreen } from "@/components/SplashScreen";
-import { MASTRA_BASE_URL, RESTAURANTS_API_DOMAIN } from "@/constants/api";
-import { THEMES } from "@/constants/theme";
-import { LoginScreen } from "@/screens/LoginScreen";
+import { useAuth } from "@/providers/AuthProvider";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
-import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
-
-// Keep the native splash up until the in-app splash is drawn over it.
-NativeSplash.preventAutoHideAsync().catch(() => undefined);
-
-// Without these, requests go to relative URLs and only fail with a generic
-// error, so point the developer at the missing config.
-if (__DEV__ && (!MASTRA_BASE_URL || !RESTAURANTS_API_DOMAIN)) {
-  console.warn(
-    "EXPO_PUBLIC_MASTRA_BASE_URL or EXPO_PUBLIC_RESTAURANTS_API_DOMAIN is missing, see .env.example",
-  );
-}
-
-// Shared services read their endpoints from this config instead of Expo's env.
-configureApi({
-  mastraBaseUrl: MASTRA_BASE_URL,
-  restaurantsApiDomain: RESTAURANTS_API_DOMAIN,
-});
+import { useTheme } from "@/providers/ThemeProvider";
 
 // TODO: Temporary screen to test the CopilotKit integration (chat, switch
 // threads). Replace it with the real chat screen.
@@ -105,19 +74,14 @@ const TestChat = ({ threadId }: TestChatProps) => {
   );
 };
 
-const TestScreen = () => {
-  const [accessToken, setAccessToken] = useState("");
+/** Chat test screen with thread switching. Only shown to signed-in users. */
+export const ChatTestScreen = () => {
   const [threadId, setThreadId] = useState(THREADS[0].id);
+  const { accessToken, signOut } = useAuth();
   const { colors } = useTheme();
 
-  // The agent rejects requests without a user token, so sign in first.
-  if (!accessToken) {
-    return (
-      <LoginScreen
-        onLoginSuccess={(data) => setAccessToken(data.accessToken)}
-      />
-    );
-  }
+  // The root layout only mounts this screen while signed in.
+  if (!accessToken) return null;
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
@@ -130,6 +94,8 @@ const TestScreen = () => {
             title={name}
           />
         ))}
+        {/* Sign out lets the user get past a saved token the server rejects. */}
+        <Button onPress={signOut} title="Sign out" />
       </View>
       <RestaurantCopilotProvider accessToken={accessToken}>
         {/* Remount the chat when the thread changes. */}
@@ -139,46 +105,7 @@ const TestScreen = () => {
   );
 };
 
-/** The app screen, with the splash drawn over it until it fades away. */
-const AppContent = () => {
-  const { theme } = useTheme();
-  const [isSplashVisible, setIsSplashVisible] = useState(true);
-  const handleSplashFinish = useCallback(() => setIsSplashVisible(false), []);
-
-  return (
-    <>
-      <TestScreen />
-      {isSplashVisible && <SplashScreen onFinish={handleSplashFinish} />}
-      <StatusBar style={theme === THEMES.DARK ? "light" : "dark"} />
-    </>
-  );
-};
-
-export const App = () => {
-  const [areFontsLoaded, fontError] = useFonts({
-    PlusJakartaSans_400Regular,
-    PlusJakartaSans_600SemiBold,
-    PlusJakartaSans_700Bold,
-    PlusJakartaSans_800ExtraBold,
-  });
-
-  // The native splash stays up while the fonts load.
-  if (!areFontsLoaded && !fontError) return null;
-
-  return (
-    // The prebuilt CopilotKit chat components need the gesture handler root.
-    <GestureHandlerRootView style={styles.root}>
-      <ThemeProvider>
-        <AppContent />
-      </ThemeProvider>
-    </GestureHandlerRootView>
-  );
-};
-
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
   screen: {
     flex: 1,
     gap: 12,
