@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   View,
+  type TextInputInstance,
   type TextInputProps,
 } from "react-native";
 
@@ -30,7 +31,7 @@ export type TextFieldProps = TextInputProps & {
   accessory?: ReactNode;
   /** Validation message; also turns the border red. */
   error?: string;
-  ref?: Ref<TextInput>;
+  ref?: Ref<TextInputInstance>;
 };
 
 /**

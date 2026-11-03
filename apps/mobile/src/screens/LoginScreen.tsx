@@ -6,6 +6,7 @@ import {
   Text,
   View,
   type LayoutChangeEvent,
+  type ScrollViewInstance,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from "react-native";
@@ -66,7 +67,7 @@ type LoginScreenProps = {
  * for example when an error message appears while the keyboard is open.
  */
 const useKeepFormAboveKeyboard = () => {
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<ScrollViewInstance>(null);
   // Bottom edge of the form, in scroll content coordinates.
   const formBottomRef = useRef(0);
   const scrollYRef = useRef(0);
