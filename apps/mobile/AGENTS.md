@@ -23,6 +23,19 @@ npx expo install --fix      # fix incompatible package versions
 
 Run lint and typecheck before declaring any task done.
 
+## Testing
+
+Tests use Jest with the `jest-expo` preset and `@testing-library/react-native` (RNTL).
+
+```bash
+pnpm --filter @repo/mobile test   # run mobile tests only
+pnpm run test                     # run all packages' tests via Turbo
+```
+
+- Put tests in `apps/mobile/__tests__/` as `*.test.tsx` (kebab-case, e.g. `login-form.test.tsx`).
+- `render` in RNTL v14 is async: `const { getByText } = await render(<Comp />)`.
+- Query by text or role, not snapshots.
+
 ## Navigation & Routing
 
 - Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
