@@ -1,7 +1,7 @@
 import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
-import { useEffect, useState, type ReactNode } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
 import { ERROR_MESSAGES } from "@repo/shared/constants/errors";
 import { RESTAURANT_CHAT_SUGGESTIONS } from "@repo/shared/constants/suggestions";
@@ -12,6 +12,7 @@ import {
 import type { Conversation } from "@repo/shared/types/conversation";
 import { ConversationDrawer } from "@/components/ConversationDrawer/ConversationDrawer";
 import { MenuIcon, PlusIcon } from "@/components/icons/Icons/Icons";
+import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { THEMES } from "@/constants/theme";
 import { useAuth } from "@/providers/AuthProvider";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
@@ -77,32 +78,6 @@ const HomeChat = ({ threadId }: HomeChatProps) => {
   );
 };
 
-type HeaderButtonProps = {
-  label: string;
-  onPress: () => void;
-  children: ReactNode;
-};
-
-/** Square icon button in the Home header. */
-const HeaderButton = ({ children, label, onPress }: HeaderButtonProps) => {
-  const { colors } = useTheme();
-
-  return (
-    <Pressable
-      accessibilityLabel={label}
-      accessibilityRole="button"
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.headerButton,
-        { backgroundColor: colors.card, borderColor: colors.border },
-        pressed && styles.pressed,
-      ]}
-    >
-      {children}
-    </Pressable>
-  );
-};
-
 /** Home: the restaurant assistant chat, with a drawer of past conversations. */
 export const HomeScreen = () => {
   // The open conversation. A new ID starts an empty chat.
@@ -110,28 +85,27 @@ export const HomeScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
+  // Deleted IDs stay out of the list even when a list request that started
+  // before the delete finishes after it.
+  const deletedIdsRef = useRef<Set<string>>(new Set());
   const { accessToken, signOut } = useAuth();
   const { colors, setTheme, theme } = useTheme();
 
   // Reload the list each time the drawer opens, so it includes new chats.
+  // Closing the drawer does not cancel the request: its result is still valid.
   useEffect(() => {
     if (!isDrawerOpen || !accessToken) return;
 
-    let isActive = true;
-
     getConversations(accessToken)
       .then(({ threads }) => {
-        if (!isActive) return;
-        setConversations(threads);
+        setConversations(
+          threads.filter((thread) => !deletedIdsRef.current.has(thread.id)),
+        );
         setLoadError(null);
       })
       .catch(() => {
-        if (isActive) setLoadError(ERROR_MESSAGES.LOAD_CONVERSATIONS_FAILED);
+        setLoadError(ERROR_MESSAGES.LOAD_CONVERSATIONS_FAILED);
       });
-
-    return () => {
-      isActive = false;
-    };
   }, [accessToken, isDrawerOpen]);
 
   const startNewChat = () => {
@@ -154,6 +128,7 @@ export const HomeScreen = () => {
       return;
     }
 
+    deletedIdsRef.current.add(conversationId);
     setConversations((current) =>
       current.filter((conversation) => conversation.id !== conversationId),
     );
@@ -188,15 +163,26 @@ export const HomeScreen = () => {
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <HeaderButton
+        <IconButton
           label="Open conversations"
           onPress={() => setIsDrawerOpen(true)}
+          style={[
+            styles.headerButton,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
         >
           <MenuIcon color={colors.foreground} size={20} />
-        </HeaderButton>
-        <HeaderButton label="New chat" onPress={startNewChat}>
+        </IconButton>
+        <IconButton
+          label="New chat"
+          onPress={startNewChat}
+          style={[
+            styles.headerButton,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
           <PlusIcon color={colors.foreground} size={20} />
-        </HeaderButton>
+        </IconButton>
       </View>
       <RestaurantCopilotProvider accessToken={accessToken}>
         {/* A new key remounts the chat when the open conversation changes. */}
@@ -206,7 +192,6 @@ export const HomeScreen = () => {
         activeThreadId={threadId}
         conversations={conversations}
         error={loadError}
-        isDark={theme === THEMES.DARK}
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         onDelete={confirmDelete}
@@ -231,14 +216,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   headerButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
     borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  pressed: {
-    opacity: 0.7,
   },
 });

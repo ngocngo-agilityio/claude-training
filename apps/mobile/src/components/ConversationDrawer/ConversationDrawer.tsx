@@ -1,6 +1,13 @@
 import type { Conversation } from "@repo/shared/types/conversation";
 import { useEffect } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  BackHandler,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Animated, {
   useAnimatedStyle,
   useReducedMotion,
@@ -16,6 +23,8 @@ import {
   Trash2Icon,
 } from "@/components/icons/Icons/Icons";
 import { GradientButton } from "@/components/ui/GradientButton/GradientButton";
+import { IconButton } from "@/components/ui/IconButton/IconButton";
+import { THEMES } from "@/constants/theme";
 import { useTheme } from "@/providers/ThemeProvider";
 import { fontFamily, fontSize, lineHeight } from "@/theme/typography";
 
@@ -26,7 +35,6 @@ const UNTITLED_CONVERSATION = "Untitled conversation";
 
 export type ConversationDrawerProps = {
   isOpen: boolean;
-  isDark: boolean;
   conversations: Conversation[];
   activeThreadId: string;
   /** Message shown in place of the list when the conversations fail to load. */
@@ -41,13 +49,12 @@ export type ConversationDrawerProps = {
 
 /**
  * Slide-in panel from the left with the conversation list, a new-chat button
- * and the account footer. Tapping the scrim closes it.
+ * and the account footer. Tapping the scrim or the Android back button closes it.
  */
 export const ConversationDrawer = ({
   activeThreadId,
   conversations,
   error,
-  isDark,
   isOpen,
   onClose,
   onDelete,
@@ -56,7 +63,8 @@ export const ConversationDrawer = ({
   onSignOut,
   onToggleTheme,
 }: ConversationDrawerProps) => {
-  const { colors } = useTheme();
+  const { colors, theme } = useTheme();
+  const isDark = theme === THEMES.DARK;
   const reduceMotion = useReducedMotion();
   // 0 when closed, 1 when open. The panel and the scrim both read it.
   const progress = useSharedValue(0);
@@ -66,6 +74,21 @@ export const ConversationDrawer = ({
       duration: reduceMotion ? 0 : ANIMATION_DURATION_MS,
     });
   }, [isOpen, progress, reduceMotion]);
+
+  // While open, the Android back button closes the drawer instead of leaving Home.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        onClose();
+        return true;
+      },
+    );
+
+    return () => subscription.remove();
+  }, [isOpen, onClose]);
 
   const panelStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: (progress.value - 1) * DRAWER_WIDTH }],
@@ -173,18 +196,16 @@ export const ConversationDrawer = ({
                       </Text>
                     </Pressable>
 
-                    <Pressable
-                      accessibilityLabel={`Delete ${title}`}
-                      accessibilityRole="button"
+                    <IconButton
+                      label={`Delete ${title}`}
                       onPress={() => onDelete(conversation.id)}
-                      style={({ pressed }) => [
+                      style={[
                         styles.deleteButton,
                         { backgroundColor: colors.dangerMuted },
-                        pressed && styles.pressed,
                       ]}
                     >
                       <Trash2Icon color={colors.destructive} size={18} />
-                    </Pressable>
+                    </IconButton>
                   </View>
                 );
               })}
@@ -197,32 +218,16 @@ export const ConversationDrawer = ({
           >
             Your account
           </Text>
-          <Pressable
-            accessibilityLabel="Switch theme"
-            accessibilityRole="button"
-            onPress={onToggleTheme}
-            style={({ pressed }) => [
-              styles.iconButton,
-              pressed && styles.pressed,
-            ]}
-          >
+          <IconButton label="Switch theme" onPress={onToggleTheme}>
             {isDark ? (
               <SunIcon color={colors.foreground} size={18} />
             ) : (
               <MoonIcon color={colors.foreground} size={18} />
             )}
-          </Pressable>
-          <Pressable
-            accessibilityLabel="Sign out"
-            accessibilityRole="button"
-            onPress={onSignOut}
-            style={({ pressed }) => [
-              styles.iconButton,
-              pressed && styles.pressed,
-            ]}
-          >
+          </IconButton>
+          <IconButton label="Sign out" onPress={onSignOut}>
             <LogOutIcon color={colors.mutedForeground} size={18} />
-          </Pressable>
+          </IconButton>
         </View>
       </Animated.View>
     </View>
@@ -311,11 +316,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.sm,
   },
   deleteButton: {
-    width: 44,
-    height: 44,
     borderRadius: 22,
-    alignItems: "center",
-    justifyContent: "center",
   },
   footer: {
     flexDirection: "row",
@@ -329,13 +330,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.semibold,
     fontSize: fontSize.sm,
     paddingHorizontal: 4,
-  },
-  iconButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    alignItems: "center",
-    justifyContent: "center",
   },
   pressed: {
     opacity: 0.7,

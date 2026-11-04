@@ -1,5 +1,6 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import type { Conversation } from "@repo/shared/types/conversation";
+import { BackHandler } from "react-native";
 import { lightColors } from "@/theme/colors";
 import { useTheme } from "@/providers/ThemeProvider";
 import {
@@ -49,7 +50,6 @@ const createProps = (
   activeThreadId: "thread-1",
   conversations,
   error: null,
-  isDark: false,
   isOpen: true,
   onClose: jest.fn(),
   onDelete: jest.fn(),
@@ -116,6 +116,29 @@ describe("ConversationDrawer", () => {
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 
+  it("closes on the Android back button while open", async () => {
+    const props = createProps();
+    type BackHandlerListener = Parameters<
+      typeof BackHandler.addEventListener
+    >[1];
+    const handlers: BackHandlerListener[] = [];
+    const spy = jest
+      .spyOn(BackHandler, "addEventListener")
+      .mockImplementation((_eventName, handler) => {
+        handlers.push(handler);
+        return { remove: jest.fn() };
+      });
+
+    await render(<ConversationDrawer {...props} />);
+    await waitFor(() => expect(handlers.length).toBeGreaterThan(0));
+    const listener = handlers[handlers.length - 1];
+    const handled = listener({} as never);
+
+    expect(handled).toBe(true);
+    expect(props.onClose).toHaveBeenCalledTimes(1);
+    spy.mockRestore();
+  });
+
   it("runs the footer actions", async () => {
     const props = createProps();
     const { getByLabelText, getByText } = await render(
@@ -129,5 +152,14 @@ describe("ConversationDrawer", () => {
     expect(props.onNewChat).toHaveBeenCalledTimes(1);
     expect(props.onToggleTheme).toHaveBeenCalledTimes(1);
     expect(props.onSignOut).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not take the back button while closed", async () => {
+    const spy = jest.spyOn(BackHandler, "addEventListener");
+
+    await render(<ConversationDrawer {...createProps({ isOpen: false })} />);
+
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
