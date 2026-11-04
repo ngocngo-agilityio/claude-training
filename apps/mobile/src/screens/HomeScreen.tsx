@@ -1,31 +1,50 @@
 import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
 import { useEffect, useRef, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
 import { ERROR_MESSAGES } from "@repo/shared/constants/errors";
-import { RESTAURANT_CHAT_SUGGESTIONS } from "@repo/shared/constants/suggestions";
 import {
   deleteConversation,
   getConversations,
 } from "@repo/shared/services/chat-service";
 import type { Conversation } from "@repo/shared/types/conversation";
 import { ConversationDrawer } from "@/components/ConversationDrawer/ConversationDrawer";
-import { MenuIcon, PlusIcon } from "@/components/icons/Icons/Icons";
-import { IconButton } from "@/components/ui/IconButton/IconButton";
+import { HomeComposer } from "@/components/home/HomeComposer/HomeComposer";
+import { HomeHeader } from "@/components/home/HomeHeader/HomeHeader";
+import { SuggestionGrid } from "@/components/home/SuggestionGrid/SuggestionGrid";
 import { THEMES } from "@/constants/theme";
 import { useAuth } from "@/providers/AuthProvider";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
 import { useTheme } from "@/providers/ThemeProvider";
+import { fontFamily, fontSize } from "@/theme/typography";
 
-/** A new id for an empty chat; the server keeps it once a message is sent. */
-const createThreadId = () => `thread-${Math.random().toString(36).slice(2)}`;
+/** Greeting and the time word of the headline, from the hour of the day. */
+const getGreeting = (hour: number) => {
+  if (hour < 12) return { greeting: "Good morning", when: "today" };
+  if (hour < 18) return { greeting: "Good afternoon", when: "today" };
+  return { greeting: "Good evening", when: "tonight" };
+};
+
+const createId = (prefix: string) =>
+  `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 type HomeChatProps = {
   threadId: string;
 };
 
-/** The prebuilt CopilotChat for the restaurant assistant, bound to one thread. */
+/**
+ * The body of the home screen for one thread. Before the first message it
+ * shows the greeting, suggestions and input. After that it shows the chat.
+ */
 const HomeChat = ({ threadId }: HomeChatProps) => {
   const [isConnected, setIsConnected] = useState(false);
   const { copilotkit } = useCopilotKit();
@@ -59,29 +78,59 @@ const HomeChat = ({ threadId }: HomeChatProps) => {
     };
   }, [agent, copilotkit, isReady]);
 
-  // A message sent before the thread is connected is lost.
-  if (!isConnected) {
-    return <Text style={{ color: colors.mutedForeground }}>Connecting…</Text>;
+  // Sends a prompt on this thread. The chat appears once the thread has
+  // messages, because the agent state then holds the user's message.
+  const sendPrompt = (text: string) => {
+    if (!isConnected) return;
+
+    agent.addMessage({ id: createId("user"), role: "user", content: text });
+    copilotkit.runAgent({ agent }).catch(() => undefined);
+  };
+
+  if (agent.messages.length > 0) {
+    return (
+      <CopilotChat
+        agentName={threadAgentId}
+        placeholder="Ask about restaurants…"
+        showHeader={false}
+      />
+    );
   }
 
+  const { greeting, when } = getGreeting(new Date().getHours());
+
   return (
-    <CopilotChat
-      agentName={threadAgentId}
-      emptyStateSubtitle="Find, compare, and book in one conversation."
-      emptyStateTitle="Where would you like to eat?"
-      initialMessages={RESTAURANT_CHAT_SUGGESTIONS.map(
-        ({ message }) => message,
-      )}
-      placeholder="Ask about restaurants…"
-      showHeader={false}
-    />
+    <View style={styles.empty}>
+      <View style={styles.intro}>
+        <Text style={[styles.greeting, { color: colors.mutedForeground }]}>
+          {greeting}
+        </Text>
+        <Text style={[styles.title, { color: colors.foreground }]}>
+          {`Where would you like to eat ${when}?`}
+        </Text>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={[styles.sectionLabel, { color: colors.subtle }]}>
+          Try one of these
+        </Text>
+        <SuggestionGrid disabled={!isConnected} onSelect={sendPrompt} />
+      </View>
+
+      <View style={styles.bottom}>
+        <HomeComposer disabled={!isConnected} onSend={sendPrompt} />
+        <Text style={[styles.disclaimer, { color: colors.subtle }]}>
+          AI can make mistakes. Please verify important details.
+        </Text>
+      </View>
+    </View>
   );
 };
 
-/** Home: the restaurant assistant chat, with a drawer of past conversations. */
+/** Home: the restaurant assistant chat, with a drawer of past conversations. Only shown to signed-in users. */
 export const HomeScreen = () => {
   // The open conversation. A new ID starts an empty chat.
-  const [threadId, setThreadId] = useState(createThreadId);
+  const [threadId, setThreadId] = useState(() => createId("thread"));
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -90,6 +139,7 @@ export const HomeScreen = () => {
   const deletedIdsRef = useRef<Set<string>>(new Set());
   const { accessToken, signOut } = useAuth();
   const { colors, setTheme, theme } = useTheme();
+  const insets = useSafeAreaInsets();
 
   // Reload the list each time the drawer opens, so it includes new chats.
   // Closing the drawer does not cancel the request: its result is still valid.
@@ -109,7 +159,7 @@ export const HomeScreen = () => {
   }, [accessToken, isDrawerOpen]);
 
   const startNewChat = () => {
-    setThreadId(createThreadId());
+    setThreadId(createId("thread"));
     setIsDrawerOpen(false);
   };
 
@@ -134,7 +184,7 @@ export const HomeScreen = () => {
     );
     // Deleting the open chat leaves an empty chat in its place.
     setThreadId((current) =>
-      current === conversationId ? createThreadId() : current,
+      current === conversationId ? createId("thread") : current,
     );
   };
 
@@ -161,28 +211,22 @@ export const HomeScreen = () => {
   if (!accessToken) return null;
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={[
+        styles.screen,
+        {
+          backgroundColor: colors.background,
+          paddingTop: insets.top + 8,
+          paddingBottom: insets.bottom,
+        },
+      ]}
+    >
       <View style={styles.header}>
-        <IconButton
-          label="Open conversations"
-          onPress={() => setIsDrawerOpen(true)}
-          style={[
-            styles.headerButton,
-            { backgroundColor: colors.card, borderColor: colors.border },
-          ]}
-        >
-          <MenuIcon color={colors.foreground} size={20} />
-        </IconButton>
-        <IconButton
-          label="New chat"
-          onPress={startNewChat}
-          style={[
-            styles.headerButton,
-            { backgroundColor: colors.card, borderColor: colors.border },
-          ]}
-        >
-          <PlusIcon color={colors.foreground} size={20} />
-        </IconButton>
+        <HomeHeader
+          onNewChat={startNewChat}
+          onOpenMenu={() => setIsDrawerOpen(true)}
+        />
       </View>
       <RestaurantCopilotProvider accessToken={accessToken}>
         {/* A new key remounts the chat when the open conversation changes. */}
@@ -200,22 +244,56 @@ export const HomeScreen = () => {
         onSignOut={signOut}
         onToggleTheme={toggleTheme}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    gap: 12,
-    paddingTop: 64,
+    paddingHorizontal: 20,
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
+    paddingBottom: 22,
   },
-  headerButton: {
-    borderWidth: 1,
+  empty: {
+    flex: 1,
+    gap: 22,
+  },
+  intro: {
+    gap: 6,
+    paddingTop: 8,
+  },
+  greeting: {
+    fontFamily: fontFamily.regular,
+    fontSize: fontSize.body,
+    lineHeight: 22,
+  },
+  title: {
+    fontFamily: fontFamily.extrabold,
+    fontSize: fontSize.title,
+    lineHeight: 34,
+    letterSpacing: -0.56,
+  },
+  section: {
+    gap: 12,
+  },
+  sectionLabel: {
+    fontFamily: fontFamily.bold,
+    fontSize: fontSize.xs,
+    lineHeight: 16,
+    letterSpacing: 1.44,
+    textTransform: "uppercase",
+  },
+  bottom: {
+    marginTop: "auto",
+    gap: 10,
+    paddingBottom: 12,
+  },
+  disclaimer: {
+    textAlign: "center",
+    fontFamily: fontFamily.regular,
+    fontSize: fontSize.xs,
+    lineHeight: 16,
   },
 });

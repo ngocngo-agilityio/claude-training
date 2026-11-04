@@ -90,13 +90,6 @@ export const MessageIcon = (props: IconProps) => (
   </IconBase>
 );
 
-export const PlusIcon = (props: IconProps) => (
-  <IconBase {...props}>
-    <Line x1={12} x2={12} y1={5} y2={19} />
-    <Line x1={5} x2={19} y1={12} y2={12} />
-  </IconBase>
-);
-
 export const MenuIcon = (props: IconProps) => (
   <IconBase {...props}>
     <Line x1={4} x2={20} y1={7} y2={7} />
@@ -138,5 +131,19 @@ export const LogOutIcon = (props: IconProps) => (
     <Path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
     <Path d="m16 17 5-5-5-5" />
     <Line x1={21} x2={9} y1={12} y2={12} />
+  </IconBase>
+);
+
+export const NewChatIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+    <Path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+  </IconBase>
+);
+
+export const SendIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="m5 12 7-7 7 7" />
+    <Path d="M12 19V5" />
   </IconBase>
 );

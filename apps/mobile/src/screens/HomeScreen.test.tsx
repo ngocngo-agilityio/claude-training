@@ -17,8 +17,15 @@ jest.mock("@copilotkit/react-native/components", () => ({
 }));
 
 jest.mock("@copilotkit/react-native/headless", () => {
-  const agent = { id: "agent" };
-  const copilotkit = { connectAgent: jest.fn(() => Promise.resolve()) };
+  const agent = {
+    id: "agent",
+    messages: [{ id: "m1", role: "user", content: "hi" }],
+    addMessage: jest.fn(),
+  };
+  const copilotkit = {
+    connectAgent: jest.fn(() => Promise.resolve()),
+    runAgent: jest.fn(() => Promise.resolve()),
+  };
   return {
     useAgent: () => ({ agent, isReady: true }),
     useCopilotKit: () => ({ copilotkit }),
@@ -44,6 +51,10 @@ jest.mock("@/providers/ThemeProvider", () => ({
     setTheme: jest.fn(),
     theme: "light",
   }),
+}));
+
+jest.mock("react-native-safe-area-context", () => ({
+  useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
 }));
 
 jest.mock("@repo/shared/services/chat-service", () => ({
@@ -114,7 +125,7 @@ describe("HomeScreen conversation drawer", () => {
     mockedGetConversations.mockResolvedValue({ threads: [romanticDinner] });
     const screen = await render(<HomeScreen />);
 
-    fireEvent.press(screen.getByLabelText("Open conversations"));
+    fireEvent.press(screen.getByLabelText("Menu"));
 
     expect(await screen.findByText("Romantic dinner")).toBeTruthy();
     expect(mockedGetConversations).toHaveBeenCalledWith("token");
@@ -124,7 +135,7 @@ describe("HomeScreen conversation drawer", () => {
     mockedGetConversations.mockRejectedValue(new Error("network down"));
     const screen = await render(<HomeScreen />);
 
-    fireEvent.press(screen.getByLabelText("Open conversations"));
+    fireEvent.press(screen.getByLabelText("Menu"));
 
     expect(
       await screen.findByText(ERROR_MESSAGES.LOAD_CONVERSATIONS_FAILED),
@@ -138,8 +149,8 @@ describe("HomeScreen conversation drawer", () => {
     mockedDeleteConversation.mockResolvedValue(undefined);
     const screen = await render(<HomeScreen />);
 
-    fireEvent.press(screen.getByLabelText("Open conversations"));
-    await screen.findByText("Family meal");
+    fireEvent.press(screen.getByLabelText("Menu"));
+    await screen.findByLabelText("Delete Family meal");
     fireEvent.press(screen.getByLabelText("Delete Family meal"));
 
     expect(alertSpy).toHaveBeenCalledWith(
@@ -151,7 +162,9 @@ describe("HomeScreen conversation drawer", () => {
 
     confirmDelete();
 
-    await waitFor(() => expect(screen.queryByText("Family meal")).toBeNull());
+    await waitFor(() =>
+      expect(screen.queryByLabelText("Delete Family meal")).toBeNull(),
+    );
     expect(mockedDeleteConversation).toHaveBeenCalledWith("token", "thread-2");
   });
 
@@ -162,8 +175,8 @@ describe("HomeScreen conversation drawer", () => {
     mockedDeleteConversation.mockRejectedValue(new Error("server error"));
     const screen = await render(<HomeScreen />);
 
-    fireEvent.press(screen.getByLabelText("Open conversations"));
-    await screen.findByText("Family meal");
+    fireEvent.press(screen.getByLabelText("Menu"));
+    await screen.findByLabelText("Delete Family meal");
     fireEvent.press(screen.getByLabelText("Delete Family meal"));
     confirmDelete();
 
@@ -172,7 +185,7 @@ describe("HomeScreen conversation drawer", () => {
         ERROR_MESSAGES.DELETE_CONVERSATION_FAILED,
       ),
     );
-    expect(screen.getByText("Family meal")).toBeTruthy();
+    expect(screen.getByLabelText("Delete Family meal")).toBeTruthy();
   });
 
   it("opens a new empty chat when the open conversation is deleted", async () => {
@@ -181,18 +194,18 @@ describe("HomeScreen conversation drawer", () => {
     const screen = await render(<HomeScreen />);
 
     // Open the conversation: its chat renders under the thread ID.
-    fireEvent.press(await screen.findByLabelText("Open conversations"));
+    fireEvent.press(await screen.findByLabelText("Menu"));
     fireEvent.press(await screen.findByText("Romantic dinner"));
-    await waitFor(() => expect(lastChatAgentName()).toContain("thread-1"));
+    await waitFor(() => expect(lastChatAgentName()).toMatch(/-thread-1$/));
 
     // Delete it while it is open.
-    fireEvent.press(screen.getByLabelText("Open conversations"));
+    fireEvent.press(screen.getByLabelText("Menu"));
     fireEvent.press(await screen.findByLabelText("Delete Romantic dinner"));
     confirmDelete();
 
     await waitFor(() => {
       expect(lastChatAgentName()).toBeDefined();
-      expect(lastChatAgentName()).not.toContain("thread-1");
+      expect(lastChatAgentName()).not.toMatch(/-thread-1$/);
     });
   });
 
@@ -212,15 +225,17 @@ describe("HomeScreen conversation drawer", () => {
     const screen = await render(<HomeScreen />);
 
     // First open: the list loads, then the drawer closes.
-    fireEvent.press(screen.getByLabelText("Open conversations"));
-    await screen.findByText("Family meal");
+    fireEvent.press(screen.getByLabelText("Menu"));
+    await screen.findByLabelText("Delete Family meal");
     fireEvent.press(screen.getByLabelText("Close conversations"));
 
     // Second open: its request is still running when the row is deleted.
-    fireEvent.press(screen.getByLabelText("Open conversations"));
+    fireEvent.press(screen.getByLabelText("Menu"));
     fireEvent.press(screen.getByLabelText("Delete Family meal"));
     confirmDelete();
-    await waitFor(() => expect(screen.queryByText("Family meal")).toBeNull());
+    await waitFor(() =>
+      expect(screen.queryByLabelText("Delete Family meal")).toBeNull(),
+    );
 
     // The older request now resolves with the deleted row still in it.
     await act(async () => {
@@ -229,7 +244,7 @@ describe("HomeScreen conversation drawer", () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(screen.queryByText("Family meal")).toBeNull();
+    expect(screen.queryByLabelText("Delete Family meal")).toBeNull();
     expect(screen.getByText("Romantic dinner")).toBeTruthy();
   });
 });

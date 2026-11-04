@@ -11,7 +11,8 @@ import {
   MessageIcon,
   MicIcon,
   MoonIcon,
-  PlusIcon,
+  NewChatIcon,
+  SendIcon,
   SunIcon,
   Trash2Icon,
 } from "./Icons";
@@ -23,14 +24,15 @@ const icons = {
   EyeIcon,
   EyeOffIcon,
   AlertCircleIcon,
+  MenuIcon,
   MicIcon,
   MessageIcon,
-  PlusIcon,
-  MenuIcon,
   Trash2Icon,
   MoonIcon,
   SunIcon,
   LogOutIcon,
+  NewChatIcon,
+  SendIcon,
 };
 
 describe("Icons", () => {
