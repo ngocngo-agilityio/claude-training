@@ -39,6 +39,7 @@ export const lightColors: ThemeColors = {
   successBorder: "#a7f3d0",
   rating: "#fbbf24",
   shadow: "0px 8px 24px rgba(28, 25, 23, 0.08)",
+  scrim: "rgba(28, 25, 23, 0.45)",
 };
 
 export const darkColors: ThemeColors = {
@@ -72,4 +73,5 @@ export const darkColors: ThemeColors = {
   successBorder: "rgba(52, 211, 153, 0.35)",
   rating: "#fbbf24",
   shadow: "0px 8px 24px rgba(0, 0, 0, 0.4)",
+  scrim: "rgba(2, 6, 14, 0.66)",
 };

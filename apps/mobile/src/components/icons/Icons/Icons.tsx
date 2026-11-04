@@ -84,11 +84,53 @@ export const MicIcon = (props: IconProps) => (
   </IconBase>
 );
 
+export const MessageIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  </IconBase>
+);
+
 export const MenuIcon = (props: IconProps) => (
   <IconBase {...props}>
     <Line x1={4} x2={20} y1={7} y2={7} />
     <Line x1={4} x2={14} y1={12} y2={12} />
     <Line x1={4} x2={20} y1={17} y2={17} />
+  </IconBase>
+);
+
+export const Trash2Icon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="M3 6h18" />
+    <Path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+    <Path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+  </IconBase>
+);
+
+export const MoonIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+  </IconBase>
+);
+
+export const SunIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Circle cx={12} cy={12} r={4} />
+    <Line x1={12} x2={12} y1={2} y2={4} />
+    <Line x1={12} x2={12} y1={20} y2={22} />
+    <Line x1={4.93} x2={6.34} y1={4.93} y2={6.34} />
+    <Line x1={17.66} x2={19.07} y1={17.66} y2={19.07} />
+    <Line x1={2} x2={4} y1={12} y2={12} />
+    <Line x1={20} x2={22} y1={12} y2={12} />
+    <Line x1={4.93} x2={6.34} y1={19.07} y2={17.66} />
+    <Line x1={17.66} x2={19.07} y1={6.34} y2={4.93} />
+  </IconBase>
+);
+
+export const LogOutIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <Path d="m16 17 5-5-5-5" />
+    <Line x1={21} x2={9} y1={12} y2={12} />
   </IconBase>
 );
 

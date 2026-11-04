@@ -42,6 +42,8 @@ export type ThemeColors = {
   rating: string;
   /** Elevation for floating surfaces such as the chat input pill. */
   shadow: string;
+  /** Dimming layer behind an open drawer or sheet. */
+  scrim: string;
 };
 
 /** Value shared by ThemeProvider through the useTheme hook. */

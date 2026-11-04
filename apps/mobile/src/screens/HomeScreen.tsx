@@ -1,6 +1,6 @@
 import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -11,9 +11,17 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
+import { ERROR_MESSAGES } from "@repo/shared/constants/errors";
+import {
+  deleteConversation,
+  getConversations,
+} from "@repo/shared/services/chat-service";
+import type { Conversation } from "@repo/shared/types/conversation";
+import { ConversationDrawer } from "@/components/ConversationDrawer/ConversationDrawer";
 import { HomeComposer } from "@/components/home/HomeComposer/HomeComposer";
 import { HomeHeader } from "@/components/home/HomeHeader/HomeHeader";
 import { SuggestionGrid } from "@/components/home/SuggestionGrid/SuggestionGrid";
+import { THEMES } from "@/constants/theme";
 import { useAuth } from "@/providers/AuthProvider";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
 import { useTheme } from "@/providers/ThemeProvider";
@@ -119,25 +127,88 @@ const HomeChat = ({ threadId }: HomeChatProps) => {
   );
 };
 
-/** Home: the new chat screen with the restaurant assistant. Only shown to signed-in users. */
+/** Home: the restaurant assistant chat, with a drawer of past conversations. Only shown to signed-in users. */
 export const HomeScreen = () => {
-  // One thread per "New chat"; kept in memory only.
+  // The open conversation. A new ID starts an empty chat.
   const [threadId, setThreadId] = useState(() => createId("thread"));
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  // Deleted IDs stay out of the list even when a list request that started
+  // before the delete finishes after it.
+  const deletedIdsRef = useRef<Set<string>>(new Set());
   const { accessToken, signOut } = useAuth();
-  const { colors } = useTheme();
+  const { colors, setTheme, theme } = useTheme();
   const insets = useSafeAreaInsets();
+
+  // Reload the list each time the drawer opens, so it includes new chats.
+  // Closing the drawer does not cancel the request: its result is still valid.
+  useEffect(() => {
+    if (!isDrawerOpen || !accessToken) return;
+
+    getConversations(accessToken)
+      .then(({ threads }) => {
+        setConversations(
+          threads.filter((thread) => !deletedIdsRef.current.has(thread.id)),
+        );
+        setLoadError(null);
+      })
+      .catch(() => {
+        setLoadError(ERROR_MESSAGES.LOAD_CONVERSATIONS_FAILED);
+      });
+  }, [accessToken, isDrawerOpen]);
+
+  const startNewChat = () => {
+    setThreadId(createId("thread"));
+    setIsDrawerOpen(false);
+  };
+
+  const selectConversation = (selectedThreadId: string) => {
+    setThreadId(selectedThreadId);
+    setIsDrawerOpen(false);
+  };
+
+  const removeConversation = async (conversationId: string) => {
+    if (!accessToken) return;
+
+    try {
+      await deleteConversation(accessToken, conversationId);
+    } catch {
+      Alert.alert(ERROR_MESSAGES.DELETE_CONVERSATION_FAILED);
+      return;
+    }
+
+    deletedIdsRef.current.add(conversationId);
+    setConversations((current) =>
+      current.filter((conversation) => conversation.id !== conversationId),
+    );
+    // Deleting the open chat leaves an empty chat in its place.
+    setThreadId((current) =>
+      current === conversationId ? createId("thread") : current,
+    );
+  };
+
+  const confirmDelete = (conversationId: string) => {
+    Alert.alert(
+      "Delete conversation?",
+      "This conversation and all its messages will be permanently deleted. This action cannot be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => void removeConversation(conversationId),
+        },
+      ],
+    );
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK);
+  };
 
   // The root layout only mounts this screen while signed in.
   if (!accessToken) return null;
-
-  // The menu drawer of conversations is not built yet. Until it is, the menu
-  // offers sign out, which lets the user get past a saved token the server rejects.
-  const openMenu = () => {
-    Alert.alert("Sign out?", "You will need to sign in again to chat.", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Sign out", style: "destructive", onPress: signOut },
-    ]);
-  };
 
   return (
     <KeyboardAvoidingView
@@ -153,13 +224,26 @@ export const HomeScreen = () => {
     >
       <View style={styles.header}>
         <HomeHeader
-          onNewChat={() => setThreadId(createId("thread"))}
-          onOpenMenu={openMenu}
+          onNewChat={startNewChat}
+          onOpenMenu={() => setIsDrawerOpen(true)}
         />
       </View>
       <RestaurantCopilotProvider accessToken={accessToken}>
+        {/* A new key remounts the chat when the open conversation changes. */}
         <HomeChat key={threadId} threadId={threadId} />
       </RestaurantCopilotProvider>
+      <ConversationDrawer
+        activeThreadId={threadId}
+        conversations={conversations}
+        error={loadError}
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        onDelete={confirmDelete}
+        onNewChat={startNewChat}
+        onSelect={selectConversation}
+        onSignOut={signOut}
+        onToggleTheme={toggleTheme}
+      />
     </KeyboardAvoidingView>
   );
 };

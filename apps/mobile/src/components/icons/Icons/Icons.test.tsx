@@ -5,11 +5,16 @@ import {
   EyeIcon,
   EyeOffIcon,
   LockIcon,
+  LogOutIcon,
   MailIcon,
   MenuIcon,
+  MessageIcon,
   MicIcon,
+  MoonIcon,
   NewChatIcon,
   SendIcon,
+  SunIcon,
+  Trash2Icon,
 } from "./Icons";
 
 const icons = {
@@ -21,6 +26,11 @@ const icons = {
   AlertCircleIcon,
   MenuIcon,
   MicIcon,
+  MessageIcon,
+  Trash2Icon,
+  MoonIcon,
+  SunIcon,
+  LogOutIcon,
   NewChatIcon,
   SendIcon,
 };
