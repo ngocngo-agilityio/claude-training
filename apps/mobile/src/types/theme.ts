@@ -14,15 +14,22 @@ export type ThemeColors = {
   secondaryForeground: string;
   muted: string;
   mutedForeground: string;
+  /** Captions, helper text and placeholders: lighter than mutedForeground. */
+  subtle: string;
   accent: string;
   accentForeground: string;
   destructive: string;
+  /** Soft background behind error and voice-mode surfaces. */
+  dangerMuted: string;
+  dangerBorder: string;
   border: string;
   input: string;
   ring: string;
   /** Main brand color: primary actions, links and highlights. */
   brand: string;
   brandForeground: string;
+  /** Focus halo around brand-bordered inputs. */
+  brandRing: string;
   /** Soft brand surface: user bubbles and selected rows. */
   brandMuted: string;
   brandBorder: string;
@@ -30,8 +37,11 @@ export type ThemeColors = {
   brandGradient: readonly [string, string];
   success: string;
   successMuted: string;
+  successBorder: string;
   /** Star color for restaurant ratings. */
   rating: string;
+  /** Elevation for floating surfaces such as the chat input pill. */
+  shadow: string;
 };
 
 /** Value shared by ThemeProvider through the useTheme hook. */

@@ -37,15 +37,12 @@ const LOGO_START_OFFSET =
   (LOGO_GAP + TITLE_LINE_HEIGHT + TITLE_GAP + TAGLINE_LINE_HEIGHT) / 2;
 const DOT_DELAYS_MS = [0, 200, 400];
 
-/**
- * Splash colors from the design. Dark mode matches the app theme; light mode
- * uses a warmer ground than the app's white background.
- */
+/** Splash colors from the theme tokens; the glow is a decorative effect. */
 const SPLASH_COLORS = {
   [THEMES.LIGHT]: {
-    background: "#fbf7f3",
-    foreground: "#1c1917",
-    mutedForeground: "#57534e",
+    background: lightColors.background,
+    foreground: lightColors.foreground,
+    mutedForeground: lightColors.mutedForeground,
     brand: lightColors.brand,
     glow: "rgba(249, 115, 22, 0.20)",
   },

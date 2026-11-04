@@ -8,9 +8,9 @@ import {
 } from "react-native";
 import { THEMES } from "@/constants/theme";
 import { useTheme } from "@/providers/ThemeProvider";
+import { fontFamily, fontSize } from "@/theme/typography";
 
-/** Primary action colors from the design. */
-const BUTTON_GRADIENT = "linear-gradient(135deg, #c2410c, #e11d48)";
+/** Glow under the primary button; a decorative effect, not a theme token. */
 const BUTTON_SHADOW = "0px 10px 24px rgba(225, 29, 72, 0.25)";
 
 type GradientButtonProps = {
@@ -36,7 +36,11 @@ export const GradientButton = ({
   // disabled button as a flat surface with readable text instead. While
   // loading, the button keeps its gradient in both themes to read as busy.
   const isDarkDisabled = disabled && !loading && theme === THEMES.DARK;
-  const titleColor = isDarkDisabled ? colors.mutedForeground : "#ffffff";
+  const titleColor = isDarkDisabled
+    ? colors.mutedForeground
+    : colors.brandForeground;
+  const [gradientStart, gradientEnd] = colors.brandGradient;
+  const gradient = `linear-gradient(135deg, ${gradientStart}, ${gradientEnd})`;
 
   return (
     <Pressable
@@ -46,6 +50,7 @@ export const GradientButton = ({
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
+        { experimental_backgroundImage: gradient },
         isDarkDisabled
           ? [
               styles.darkDisabled,
@@ -77,7 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 8,
     borderRadius: 16,
-    experimental_backgroundImage: BUTTON_GRADIENT,
     boxShadow: BUTTON_SHADOW,
   },
   disabled: {
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.98 }],
   },
   title: {
-    fontFamily: "PlusJakartaSans_700Bold",
-    fontSize: 16,
+    fontFamily: fontFamily.bold,
+    fontSize: fontSize.base,
   },
 });
