@@ -68,7 +68,7 @@ you judge the code in context.
   code; web uses Tailwind + `cn()` + cva, mobile uses `StyleSheet.create` and
   colors from `useTheme()` / `src/theme`.
 - **Tests**: new or changed logic in `apps/agent` or `packages/shared` should
-  have a test in `apps/agent/tests/*.test.mjs`.
+  have a test next to the module it covers, as `apps/agent/src/**/*.test.mjs`.
 - **Earlier comments**: every earlier review comment is either fixed in the
   code or answered. Name any that are still open.
 - **MR hygiene**: Conventional Commit title and commit messages (`feat:`,
