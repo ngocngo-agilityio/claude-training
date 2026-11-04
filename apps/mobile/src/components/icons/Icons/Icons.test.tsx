@@ -6,7 +6,10 @@ import {
   EyeOffIcon,
   LockIcon,
   MailIcon,
+  MenuIcon,
   MicIcon,
+  NewChatIcon,
+  SendIcon,
 } from "./Icons";
 
 const icons = {
@@ -16,7 +19,10 @@ const icons = {
   EyeIcon,
   EyeOffIcon,
   AlertCircleIcon,
+  MenuIcon,
   MicIcon,
+  NewChatIcon,
+  SendIcon,
 };
 
 describe("Icons", () => {
