@@ -1,28 +1,19 @@
 import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AGENT_IDS } from "@repo/shared/constants/agents";
 import { RESTAURANT_CHAT_SUGGESTIONS } from "@repo/shared/constants/suggestions";
 import { useAuth } from "@/providers/AuthProvider";
 import { RestaurantCopilotProvider } from "@/providers/RestaurantCopilotProvider";
 import { useTheme } from "@/providers/ThemeProvider";
 
-// TODO: Temporary screen to test the CopilotKit integration (chat, switch
-// threads). Replace it with the real chat screen.
-
-// Two threads for this app session, to check switching between them.
-const THREADS = ["Thread A", "Thread B"].map((name) => ({
-  name,
-  id: `thread-${Math.random().toString(36).slice(2)}`,
-}));
-
-type TestChatProps = {
+type HomeChatProps = {
   threadId: string;
 };
 
-/** The prebuilt CopilotChat, bound to one thread. */
-const TestChat = ({ threadId }: TestChatProps) => {
+/** The prebuilt CopilotChat for the restaurant assistant, bound to one thread. */
+const HomeChat = ({ threadId }: HomeChatProps) => {
   const [isConnected, setIsConnected] = useState(false);
   const { copilotkit } = useCopilotKit();
   const { colors } = useTheme();
@@ -74,9 +65,12 @@ const TestChat = ({ threadId }: TestChatProps) => {
   );
 };
 
-/** Chat test screen with thread switching. Only shown to signed-in users. */
-export const ChatTestScreen = () => {
-  const [threadId, setThreadId] = useState(THREADS[0].id);
+/** Home: one chat with the restaurant assistant. Only shown to signed-in users. */
+export const HomeScreen = () => {
+  // One thread for the whole app session, kept in memory only.
+  const [threadId] = useState(
+    () => `thread-${Math.random().toString(36).slice(2)}`,
+  );
   const { accessToken, signOut } = useAuth();
   const { colors } = useTheme();
 
@@ -85,21 +79,16 @@ export const ChatTestScreen = () => {
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
-      <View style={styles.threads}>
-        {THREADS.map(({ id, name }) => (
-          <Button
-            disabled={id === threadId}
-            key={id}
-            onPress={() => setThreadId(id)}
-            title={name}
-          />
-        ))}
+      <View style={styles.header}>
         {/* Sign out lets the user get past a saved token the server rejects. */}
-        <Button onPress={signOut} title="Sign out" />
+        <Pressable accessibilityRole="button" onPress={signOut} hitSlop={8}>
+          <Text style={[styles.signOut, { color: colors.mutedForeground }]}>
+            Sign out
+          </Text>
+        </Pressable>
       </View>
       <RestaurantCopilotProvider accessToken={accessToken}>
-        {/* Remount the chat when the thread changes. */}
-        <TestChat key={threadId} threadId={threadId} />
+        <HomeChat threadId={threadId} />
       </RestaurantCopilotProvider>
     </View>
   );
@@ -109,11 +98,13 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     gap: 12,
-    padding: 16,
     paddingTop: 64,
   },
-  threads: {
-    flexDirection: "row",
-    gap: 8,
+  header: {
+    alignItems: "flex-end",
+    paddingHorizontal: 16,
+  },
+  signOut: {
+    fontSize: 14,
   },
 });

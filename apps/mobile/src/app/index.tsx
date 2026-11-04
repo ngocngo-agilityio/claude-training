@@ -1,5 +1,5 @@
-import { ChatTestScreen } from "@/screens/ChatTestScreen";
+import { HomeScreen } from "@/screens/HomeScreen";
 
 export default function HomeRoute() {
-  return <ChatTestScreen />;
+  return <HomeScreen />;
 }
