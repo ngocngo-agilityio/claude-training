@@ -1,4 +1,3 @@
-import { CopilotChat } from "@copilotkit/react-native/components";
 import { useAgent, useCopilotKit } from "@copilotkit/react-native/headless";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -17,6 +16,7 @@ import {
   getConversations,
 } from "@repo/shared/services/chat-service";
 import type { Conversation } from "@repo/shared/types/conversation";
+import { ChatView } from "@/components/chat/ChatView/ChatView";
 import { ConversationDrawer } from "@/components/ConversationDrawer/ConversationDrawer";
 import { HomeComposer } from "@/components/home/HomeComposer/HomeComposer";
 import { HomeHeader } from "@/components/home/HomeHeader/HomeHeader";
@@ -39,19 +39,21 @@ const createId = (prefix: string) =>
 
 type HomeChatProps = {
   threadId: string;
+  onOpenMenu: () => void;
+  onNewChat: () => void;
 };
 
 /**
  * The body of the home screen for one thread. Before the first message it
  * shows the greeting, suggestions and input. After that it shows the chat.
  */
-const HomeChat = ({ threadId }: HomeChatProps) => {
+const HomeChat = ({ threadId, onOpenMenu, onNewChat }: HomeChatProps) => {
   const [isConnected, setIsConnected] = useState(false);
   const { copilotkit } = useCopilotKit();
   const { colors } = useTheme();
 
-  // CopilotChat has no thread prop. Registering a private agent for this
-  // thread and passing its ID as `agentName` scopes the chat to the thread.
+  // Registering a private agent for this thread and using its ID scopes the
+  // conversation to the thread.
   const threadAgentId = `${AGENT_IDS.RESTAURANT_RESERVATION}-${threadId}`;
   const { agent, isReady } = useAgent({
     agentId: threadAgentId,
@@ -59,8 +61,8 @@ const HomeChat = ({ threadId }: HomeChatProps) => {
     threadId,
   });
 
-  // Load the saved messages of this thread; CopilotChat does not do it. Wait
-  // for `isReady`: before that, `agent` is a placeholder for the real agent.
+  // Load the saved messages of this thread. Wait for `isReady`: before that,
+  // `agent` is a placeholder for the real agent.
   useEffect(() => {
     if (!isReady) return;
 
@@ -87,12 +89,21 @@ const HomeChat = ({ threadId }: HomeChatProps) => {
     copilotkit.runAgent({ agent }).catch(() => undefined);
   };
 
+  const stopAgent = () => {
+    copilotkit.stopAgent({ agent });
+  };
+
   if (agent.messages.length > 0) {
     return (
-      <CopilotChat
-        agentName={threadAgentId}
-        placeholder="Ask about restaurants…"
-        showHeader={false}
+      <ChatView
+        isRunning={agent.isRunning}
+        messages={agent.messages}
+        onOpenMenu={onOpenMenu}
+        onSend={sendPrompt}
+        onStop={stopAgent}
+        onViewDetails={(restaurantId) =>
+          sendPrompt(`Show the details of restaurant with id ${restaurantId}`)
+        }
       />
     );
   }
@@ -101,6 +112,10 @@ const HomeChat = ({ threadId }: HomeChatProps) => {
 
   return (
     <View style={styles.empty}>
+      <View style={styles.header}>
+        <HomeHeader onNewChat={onNewChat} onOpenMenu={onOpenMenu} />
+      </View>
+
       <View style={styles.intro}>
         <Text style={[styles.greeting, { color: colors.mutedForeground }]}>
           {greeting}
@@ -222,15 +237,14 @@ export const HomeScreen = () => {
         },
       ]}
     >
-      <View style={styles.header}>
-        <HomeHeader
-          onNewChat={startNewChat}
-          onOpenMenu={() => setIsDrawerOpen(true)}
-        />
-      </View>
       <RestaurantCopilotProvider accessToken={accessToken}>
         {/* A new key remounts the chat when the open conversation changes. */}
-        <HomeChat key={threadId} threadId={threadId} />
+        <HomeChat
+          key={threadId}
+          onNewChat={startNewChat}
+          onOpenMenu={() => setIsDrawerOpen(true)}
+          threadId={threadId}
+        />
       </RestaurantCopilotProvider>
       <ConversationDrawer
         activeThreadId={threadId}

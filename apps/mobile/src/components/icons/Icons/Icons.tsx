@@ -141,6 +141,20 @@ export const NewChatIcon = (props: IconProps) => (
   </IconBase>
 );
 
+export const EllipsisIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Circle cx="12" cy="12" r="1" />
+    <Circle cx="19" cy="12" r="1" />
+    <Circle cx="5" cy="12" r="1" />
+  </IconBase>
+);
+
+export const CheckIcon = (props: IconProps) => (
+  <IconBase {...props}>
+    <Path d="M20 6 9 17l-5-5" />
+  </IconBase>
+);
+
 export const SendIcon = (props: IconProps) => (
   <IconBase {...props}>
     <Path d="m5 12 7-7 7 7" />

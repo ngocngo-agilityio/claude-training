@@ -1,4 +1,3 @@
-import { CopilotChat } from "@copilotkit/react-native/components";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import type { ReactNode } from "react";
@@ -8,18 +7,15 @@ import {
   getConversations,
 } from "@repo/shared/services/chat-service";
 import type { Conversation } from "@repo/shared/types/conversation";
+import { useAgent } from "@copilotkit/react-native/headless";
 import { HomeScreen } from "./HomeScreen";
 
 // The chat engine and the providers need native modules and a server. The
 // screen only needs them to render, so they are replaced with simple stubs.
-jest.mock("@copilotkit/react-native/components", () => ({
-  CopilotChat: jest.fn(() => null),
-}));
-
 jest.mock("@copilotkit/react-native/headless", () => {
   const agent = {
     id: "agent",
-    messages: [{ id: "m1", role: "user", content: "hi" }],
+    messages: [],
     addMessage: jest.fn(),
   };
   const copilotkit = {
@@ -27,7 +23,7 @@ jest.mock("@copilotkit/react-native/headless", () => {
     runAgent: jest.fn(() => Promise.resolve()),
   };
   return {
-    useAgent: () => ({ agent, isReady: true }),
+    useAgent: jest.fn(() => ({ agent, isReady: true })),
     useCopilotKit: () => ({ copilotkit }),
   };
 });
@@ -93,13 +89,10 @@ const familyMeal: Conversation = {
   updatedAt: "2026-11-02T10:05:00Z",
 };
 
-/** The agent name the chat was last rendered with; it carries the thread ID. */
+/** The agent ID the screen last opened; it carries the thread ID. */
 const lastChatAgentName = () =>
-  (
-    jest.mocked(CopilotChat).mock.lastCall?.[0] as
-      | { agentName?: string }
-      | undefined
-  )?.agentName;
+  (jest.mocked(useAgent).mock.lastCall?.[0] as { agentId?: string } | undefined)
+    ?.agentId;
 
 describe("HomeScreen conversation drawer", () => {
   let alertSpy: jest.SpyInstance;

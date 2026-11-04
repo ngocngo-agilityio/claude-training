@@ -20,9 +20,12 @@ export const HomeComposer = ({
   const [gradientStart, gradientEnd] = colors.brandGradient;
   const canSend = !disabled && text.trim().length > 0;
 
-  const submit = () => {
-    if (!canSend) return;
-    onSend(text.trim());
+  // Takes the text from the event: a fast return can run before the state
+  // holds the last typed characters.
+  const submit = (value: string = text) => {
+    const trimmed = value.trim();
+    if (!trimmed) return;
+    onSend(trimmed);
     setText("");
   };
 
@@ -41,7 +44,7 @@ export const HomeComposer = ({
         accessibilityLabel="Message"
         editable={!disabled}
         onChangeText={setText}
-        onSubmitEditing={submit}
+        onSubmitEditing={(event) => submit(event.nativeEvent.text)}
         placeholder="Ask anything about restaurants…"
         placeholderTextColor={colors.subtle}
         returnKeyType="send"
@@ -65,7 +68,7 @@ export const HomeComposer = ({
         accessibilityLabel="Send"
         accessibilityState={{ disabled: !canSend }}
         disabled={!canSend}
-        onPress={submit}
+        onPress={() => submit()}
         style={[
           styles.send,
           {
