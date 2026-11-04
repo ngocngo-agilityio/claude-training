@@ -27,6 +27,7 @@ import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { THEMES } from "@/constants/theme";
 import { useTheme } from "@/providers/ThemeProvider";
 import { fontFamily, fontSize, lineHeight } from "@/theme/typography";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /** Width of the panel, from the Drawer artboard of the RestoAI design. */
 const DRAWER_WIDTH = 318;
@@ -64,6 +65,7 @@ export const ConversationDrawer = ({
   onToggleTheme,
 }: ConversationDrawerProps) => {
   const { colors, theme } = useTheme();
+  const insets = useSafeAreaInsets();
   const isDark = theme === THEMES.DARK;
   const reduceMotion = useReducedMotion();
   // 0 when closed, 1 when open. The panel and the scrim both read it.
@@ -123,7 +125,15 @@ export const ConversationDrawer = ({
       </Pressable>
 
       <Animated.View
-        style={[styles.panel, { backgroundColor: colors.card }, panelStyle]}
+        style={[
+          styles.panel,
+          {
+            backgroundColor: colors.card,
+            paddingTop: insets.top + 16,
+            paddingBottom: insets.bottom + 24,
+          },
+          panelStyle,
+        ]}
       >
         <View style={styles.brand}>
           <View style={[styles.logo, { backgroundColor: colors.brand }]}>
@@ -241,8 +251,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     width: DRAWER_WIDTH,
-    paddingTop: 64,
-    paddingBottom: 24,
     paddingHorizontal: 16,
     gap: 20,
     borderTopRightRadius: 28,
