@@ -16,8 +16,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { login } from "@repo/shared/services/auth-service";
 import type { LoginFormValues, LoginResponse } from "@repo/shared/types/auth";
-import { LoginForm } from "@/components/auth/LoginForm";
-import { ChefHatIcon, MicIcon } from "@/components/icons/Icons";
+import { LoginForm } from "@/components/auth/LoginForm/LoginForm";
+import { ChefHatIcon, MicIcon } from "@/components/icons/Icons/Icons";
 import { THEMES } from "@/constants/theme";
 import { useTheme } from "@/providers/ThemeProvider";
 import { darkColors, lightColors } from "@/theme/colors";

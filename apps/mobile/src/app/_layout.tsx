@@ -10,7 +10,7 @@ import * as NativeSplash from "expo-splash-screen";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { configureApi } from "@repo/shared/config/api";
-import { AppShell } from "@/components/AppShell";
+import { AppShell } from "@/components/AppShell/AppShell";
 import { MASTRA_BASE_URL, RESTAURANTS_API_DOMAIN } from "@/constants/api";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";

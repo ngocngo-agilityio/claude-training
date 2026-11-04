@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { dropSavedClientHistory } from "../src/mastra/lib/client-tool-messages.ts";
+import { dropSavedClientHistory } from "./client-tool-messages.ts";
 
 const toolCall = (id, name) => ({
   id,

@@ -15,6 +15,7 @@ pnpm workspace; Turborepo runs and caches tasks. Apps: `apps/web` (React + Vite)
 - `type` over `interface`, strict TS, named exports, functional components with an extracted `XxxProps` type
 - Imports: `@/*` inside an app; shared code as `@repo/shared/<folder>/<file>`; relative `.ts` imports inside `packages/shared`
 - Naming: PascalCase for components and their files (`LoginForm.tsx`); camelCase functions/variables; kebab-case for other files (`reserve-restaurant-tool.ts`)
+- Tests sit next to the file they cover (`Foo.test.ts(x)`, `Foo.test.mjs`), never in a separate `tests/` or `__tests__/` folder. Mobile components live in their own folder with their test: `src/components/ui/Button/Button.tsx` + `Button.test.tsx`
 - Package scripts are `dev`, `build`, `typecheck`, `test`; register new task names in `turbo.json`
 - Web: Tailwind + `cn()` from `@/lib/utils`, variants with cva; UI in `src/components/ui`, AI UI in `src/components/ai-elements`
 - Mobile: `StyleSheet.create` + colors from `useTheme()` / `src/theme`; see `apps/mobile/AGENTS.md`

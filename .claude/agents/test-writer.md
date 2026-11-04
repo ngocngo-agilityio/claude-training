@@ -6,7 +6,7 @@ tools: Read, Grep, Glob, Write, Edit, Bash
 
 You write tests for `apps/agent`, following the repo's AGENTS.md.
 
-- The test runner is `node --test`; test files live in `apps/agent/tests/**/*.test.mjs`. Read the existing tests first and match their style.
+- The test runner is `node --test`; test files sit next to the module they cover, as `apps/agent/src/**/*.test.mjs` (never in a `tests/` folder). Read the existing tests first and match their style.
 - Only add test files; do not change production code.
 - Run `pnpm run test` from the repo root to confirm the tests pass. If one fails because of a real bug, report it instead of fixing it.
 - Report briefly: test file created, number of cases, run result.

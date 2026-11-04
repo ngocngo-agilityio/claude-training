@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useState } from "react";
-import { SplashScreen } from "@/components/SplashScreen";
+import { SplashScreen } from "@/components/SplashScreen/SplashScreen";
 import { THEMES } from "@/constants/theme";
 import { useAuth } from "@/providers/AuthProvider";
 import { useTheme } from "@/providers/ThemeProvider";

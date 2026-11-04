@@ -13,9 +13,12 @@ import {
   EyeOffIcon,
   LockIcon,
   MailIcon,
-} from "@/components/icons/Icons";
-import { GradientButton } from "@/components/ui/GradientButton";
-import { TextField, type TextFieldColors } from "@/components/ui/TextField";
+} from "@/components/icons/Icons/Icons";
+import { GradientButton } from "@/components/ui/GradientButton/GradientButton";
+import {
+  TextField,
+  type TextFieldColors,
+} from "@/components/ui/TextField/TextField";
 
 export type LoginFormColors = TextFieldColors & {
   muted: string;
