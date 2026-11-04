@@ -18,7 +18,7 @@ import { scheduleOnRN } from "react-native-worklets";
 import { THEMES } from "@/constants/theme";
 import { useTheme } from "@/providers/ThemeProvider";
 import { darkColors, lightColors } from "@/theme/colors";
-import splashIcon from "../../assets/splash-icon.png";
+import splashIcon from "../../../assets/splash-icon.png";
 
 /** How long the splash stays up before it hands over to the app. */
 const SPLASH_MIN_DURATION_MS = 1500;

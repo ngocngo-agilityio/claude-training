@@ -32,7 +32,7 @@ pnpm --filter @repo/mobile test   # run mobile tests only
 pnpm run test                     # run all packages' tests via Turbo
 ```
 
-- Put tests in `apps/mobile/__tests__/` as `*.test.tsx` (kebab-case, e.g. `login-form.test.tsx`).
+- Each component lives in its own folder with its test beside it: `src/components/<group>/<Name>/<Name>.tsx` and `<Name>.test.tsx`. Non-component tests sit next to their source file (e.g. `src/theme/colors.test.ts`). Never put tests in `src/app/`.
 - `render` in RNTL v14 is async: `const { getByText } = await render(<Comp />)`.
 - Query by text or role, not snapshots.
 
