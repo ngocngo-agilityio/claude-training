@@ -14,6 +14,7 @@ import Animated, {
   FadeInDown,
   useReducedMotion,
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { login } from "@repo/shared/services/auth-service";
 import type { LoginFormValues, LoginResponse } from "@repo/shared/types/auth";
 import { LoginForm } from "@/components/auth/LoginForm/LoginForm";
@@ -24,6 +25,7 @@ import { darkColors, lightColors } from "@/theme/colors";
 import type { ThemeColors } from "@/types/theme";
 
 const LOGO_GRADIENT = `linear-gradient(135deg, ${lightColors.brandGradient[0]}, ${lightColors.brandGradient[1]})`;
+const CONTENT_PADDING_TOP = 40;
 const CONTENT_PADDING_BOTTOM = 40;
 
 /** Maps the app theme onto the fields the sign in form reads. */
@@ -144,6 +146,9 @@ export const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
     }
   };
 
+  // Keeps the content clear of the notch and the home indicator.
+  const insets = useSafeAreaInsets();
+
   const enter = (delay: number) =>
     isReducedMotion ? undefined : FadeInDown.delay(delay).springify();
 
@@ -151,7 +156,11 @@ export const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
     <ScrollView
       contentContainerStyle={[
         styles.content,
-        { paddingBottom: CONTENT_PADDING_BOTTOM + keyboardHeight },
+        {
+          paddingTop: insets.top + CONTENT_PADDING_TOP,
+          paddingBottom:
+            CONTENT_PADDING_BOTTOM + keyboardHeight + insets.bottom,
+        },
       ]}
       keyboardShouldPersistTaps="handled"
       onContentSizeChange={onContentSizeChange}
@@ -209,7 +218,6 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     gap: 32,
-    paddingTop: 96,
     paddingHorizontal: 24,
   },
   header: {
