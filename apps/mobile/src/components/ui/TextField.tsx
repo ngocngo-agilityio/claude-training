@@ -8,9 +8,6 @@ import {
   type TextInputProps,
 } from "react-native";
 
-/** Focus colors from the design, the same in both themes. */
-const FOCUS_BORDER_COLOR = "#f97316";
-const FOCUS_RING = "0px 0px 0px 4px rgba(249, 115, 22, 0.14)";
 /** Room for one line of error text between this field and the next. */
 const ERROR_SLOT_HEIGHT = 26;
 
@@ -19,6 +16,8 @@ export type TextFieldColors = {
   text: string;
   subtle: string;
   border: string;
+  brand: string;
+  brandRing: string;
   destructive: string;
 };
 
@@ -55,7 +54,7 @@ export const TextField = ({
   const borderColor = error
     ? colors.destructive
     : isFocused
-      ? FOCUS_BORDER_COLOR
+      ? colors.brand
       : colors.border;
 
   return (
@@ -70,7 +69,9 @@ export const TextField = ({
             borderColor,
             borderWidth: isFocused || error ? 1.5 : 1,
           },
-          isFocused && !error ? styles.focusRing : null,
+          isFocused && !error
+            ? { boxShadow: `0px 0px 0px 4px ${colors.brandRing}` }
+            : null,
         ]}
       >
         {icon}
@@ -124,9 +125,6 @@ const styles = StyleSheet.create({
   },
   boxWithAccessory: {
     paddingRight: 6,
-  },
-  focusRing: {
-    boxShadow: FOCUS_RING,
   },
   input: {
     flex: 1,

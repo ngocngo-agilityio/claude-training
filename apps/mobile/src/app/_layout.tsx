@@ -1,5 +1,6 @@
 import {
   PlusJakartaSans_400Regular,
+  PlusJakartaSans_500Medium,
   PlusJakartaSans_600SemiBold,
   PlusJakartaSans_700Bold,
   PlusJakartaSans_800ExtraBold,
@@ -34,6 +35,7 @@ configureApi({
 export default function RootLayout() {
   const [areFontsLoaded, fontError] = useFonts({
     PlusJakartaSans_400Regular,
+    PlusJakartaSans_500Medium,
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_700Bold,
     PlusJakartaSans_800ExtraBold,

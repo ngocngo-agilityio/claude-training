@@ -1,38 +1,44 @@
 import type { ThemeColors } from "@/types/theme";
 
 /**
- * Color tokens for the mobile app.
+ * Color tokens for the mobile app, taken from the RestoAI mobile design
+ * (Home, Login and Splash artboards). React Native does not support oklch or
+ * CSS variables, so every value is a hex or rgba string.
  *
- * The neutral tokens (background, foreground, card, ...) use the same names and
- * values as the web theme in apps/web/src/index.css, converted from oklch to
- * hex because React Native does not support oklch. The brand tokens collect the
- * orange palette that the web components apply through Tailwind classes.
+ * Light uses the warm stone neutrals of the design. Dark keeps the blue-slate
+ * ground the app already shipped with, which the design's dark artboards use.
  */
 export const lightColors: ThemeColors = {
-  background: "#ffffff",
-  foreground: "#020618",
+  background: "#f7f5f2",
+  foreground: "#1c1917",
   card: "#ffffff",
-  cardForeground: "#020618",
-  primary: "#0f172b",
-  primaryForeground: "#f8fafc",
-  secondary: "#f1f5f9",
-  secondaryForeground: "#0f172b",
-  muted: "#f1f5f9",
-  mutedForeground: "#62748e",
-  accent: "#f1f5f9",
-  accentForeground: "#0f172b",
-  destructive: "#e7000b",
-  border: "#e2e8f0",
-  input: "#e2e8f0",
-  ring: "#90a1b9",
-  brand: "#f97316",
+  cardForeground: "#1c1917",
+  primary: "#1c1917",
+  primaryForeground: "#fafaf9",
+  secondary: "#f5f5f4",
+  secondaryForeground: "#1c1917",
+  muted: "#f5f5f4",
+  mutedForeground: "#57534e",
+  subtle: "#78716c",
+  accent: "#f5f5f4",
+  accentForeground: "#1c1917",
+  destructive: "#be123c",
+  dangerMuted: "#fff1f2",
+  dangerBorder: "#fecdd3",
+  border: "#e7e5e4",
+  input: "#e7e5e4",
+  ring: "#a8a29e",
+  brand: "#c2410c",
   brandForeground: "#ffffff",
-  brandMuted: "#fff7ed",
+  brandRing: "rgba(194, 65, 12, 0.14)",
+  brandMuted: "#ffedd5",
   brandBorder: "#fed7aa",
-  brandGradient: ["#f97316", "#f43f5e"],
-  success: "#059669",
+  brandGradient: ["#c2410c", "#e11d48"],
+  success: "#047857",
   successMuted: "#ecfdf5",
+  successBorder: "#a7f3d0",
   rating: "#fbbf24",
+  shadow: "0px 8px 24px rgba(28, 25, 23, 0.08)",
 };
 
 export const darkColors: ThemeColors = {
@@ -46,18 +52,24 @@ export const darkColors: ThemeColors = {
   secondaryForeground: "#e6ecf3",
   muted: "#1a2330",
   mutedForeground: "#9ea9b7",
+  subtle: "#8793a3",
   accent: "#1e2a3e",
   accentForeground: "#f8fafc",
   destructive: "#ff6467",
+  dangerMuted: "rgba(255, 100, 103, 0.12)",
+  dangerBorder: "rgba(255, 100, 103, 0.35)",
   border: "rgba(174, 184, 198, 0.18)",
   input: "rgba(174, 184, 198, 0.22)",
   ring: "#ff7716",
   brand: "#ff7c25",
   brandForeground: "#fdf9f7",
-  brandMuted: "rgba(249, 115, 22, 0.12)",
+  brandRing: "rgba(249, 115, 22, 0.14)",
+  brandMuted: "rgba(249, 115, 22, 0.14)",
   brandBorder: "rgba(249, 115, 22, 0.35)",
   brandGradient: ["#f97316", "#f43f5e"],
   success: "#34d399",
   successMuted: "rgba(16, 185, 129, 0.12)",
+  successBorder: "rgba(52, 211, 153, 0.35)",
   rating: "#fbbf24",
+  shadow: "0px 8px 24px rgba(0, 0, 0, 0.4)",
 };

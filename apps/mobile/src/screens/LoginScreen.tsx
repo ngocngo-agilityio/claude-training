@@ -21,35 +21,27 @@ import { ChefHatIcon, MicIcon } from "@/components/icons/Icons";
 import { THEMES } from "@/constants/theme";
 import { useTheme } from "@/providers/ThemeProvider";
 import { darkColors, lightColors } from "@/theme/colors";
+import type { ThemeColors } from "@/types/theme";
 
-const LOGO_GRADIENT = "linear-gradient(135deg, #f97316, #e11d48)";
+const LOGO_GRADIENT = `linear-gradient(135deg, ${lightColors.brandGradient[0]}, ${lightColors.brandGradient[1]})`;
 const CONTENT_PADDING_BOTTOM = 40;
 
-/**
- * Sign in colors from the design. Dark mode matches the app theme; light mode
- * uses the design's warm ground, a shade cooler than the splash's #fbf7f3.
- */
+/** Maps the app theme onto the fields the sign in form reads. */
+const toLoginColors = (colors: ThemeColors) => ({
+  background: colors.background,
+  surface: colors.card,
+  text: colors.foreground,
+  muted: colors.mutedForeground,
+  subtle: colors.subtle,
+  border: colors.border,
+  brand: colors.brand,
+  brandRing: colors.brandRing,
+  destructive: colors.destructive,
+});
+
 const LOGIN_COLORS = {
-  [THEMES.LIGHT]: {
-    background: "#f7f5f2",
-    surface: "#ffffff",
-    text: "#1c1917",
-    muted: "#57534e",
-    subtle: "#78716c",
-    border: "#e7e5e4",
-    brand: "#c2410c",
-    destructive: lightColors.destructive,
-  },
-  [THEMES.DARK]: {
-    background: darkColors.background,
-    surface: darkColors.card,
-    text: darkColors.foreground,
-    muted: darkColors.mutedForeground,
-    subtle: "#8793a3",
-    border: darkColors.border,
-    brand: darkColors.brand,
-    destructive: darkColors.destructive,
-  },
+  [THEMES.LIGHT]: toLoginColors(lightColors),
+  [THEMES.DARK]: toLoginColors(darkColors),
 };
 
 /** Space kept between the submit button and the top of the keyboard. */
