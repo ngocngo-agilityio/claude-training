@@ -12,6 +12,20 @@ jest.mock("expo-secure-store", () => ({
 
 const mockedSecureStore = jest.mocked(SecureStore);
 
+/** Builds an unsigned JWT that expires at the given time (seconds since the epoch). */
+const makeToken = (exp: number) => {
+  const encode = (value: object) =>
+    btoa(JSON.stringify(value))
+      .replace(/=+$/, "")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_");
+
+  return `${encode({ alg: "HS256", typ: "JWT" })}.${encode({ sub: "1", exp })}.signature`;
+};
+
+const SAVED_TOKEN = makeToken(Math.floor(Date.now() / 1000) + 3600);
+const EXPIRED_TOKEN = makeToken(Math.floor(Date.now() / 1000) - 60);
+
 /** Shows the token state and offers buttons that sign in and out. */
 const AuthProbe = () => {
   const { accessToken, isLoading, signIn, signOut } = useAuth();
@@ -42,7 +56,7 @@ describe("AuthProvider", () => {
   });
 
   test("restores the token saved on the device", async () => {
-    mockedSecureStore.getItemAsync.mockResolvedValue("saved-token");
+    mockedSecureStore.getItemAsync.mockResolvedValue(SAVED_TOKEN);
 
     const { getByText } = await render(
       <AuthProvider>
@@ -50,7 +64,7 @@ describe("AuthProvider", () => {
       </AuthProvider>,
     );
 
-    await waitFor(() => expect(getByText("saved-token")).toBeTruthy());
+    await waitFor(() => expect(getByText(SAVED_TOKEN)).toBeTruthy());
     expect(mockedSecureStore.getItemAsync).toHaveBeenCalledWith(
       STORAGE_KEYS.ACCESS_TOKEN,
     );
@@ -118,16 +132,30 @@ describe("AuthProvider", () => {
   });
 
   test("clears the saved token when the user signs out", async () => {
-    mockedSecureStore.getItemAsync.mockResolvedValue("saved-token");
+    mockedSecureStore.getItemAsync.mockResolvedValue(SAVED_TOKEN);
 
     const { getByText } = await render(
       <AuthProvider>
         <AuthProbe />
       </AuthProvider>,
     );
-    await waitFor(() => expect(getByText("saved-token")).toBeTruthy());
+    await waitFor(() => expect(getByText(SAVED_TOKEN)).toBeTruthy());
 
     fireEvent.press(getByText("sign out"));
+
+    await waitFor(() => expect(getByText("signed out")).toBeTruthy());
+    expect(mockedSecureStore.deleteItemAsync).toHaveBeenCalledWith(
+      STORAGE_KEYS.ACCESS_TOKEN,
+    );
+  });
+  test("drops a saved token that has expired", async () => {
+    mockedSecureStore.getItemAsync.mockResolvedValue(EXPIRED_TOKEN);
+
+    const { getByText } = await render(
+      <AuthProvider>
+        <AuthProbe />
+      </AuthProvider>,
+    );
 
     await waitFor(() => expect(getByText("signed out")).toBeTruthy());
     expect(mockedSecureStore.deleteItemAsync).toHaveBeenCalledWith(

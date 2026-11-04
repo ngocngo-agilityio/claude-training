@@ -8,6 +8,7 @@ import {
 } from "react";
 import * as SecureStore from "expo-secure-store";
 import { STORAGE_KEYS } from "@/constants/storage";
+import { isTokenExpired } from "@/providers/auth-token";
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -47,6 +48,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     SecureStore.getItemAsync(STORAGE_KEYS.ACCESS_TOKEN)
       .then((value) => {
+        // The server rejects an expired token with 401 on every request, so a
+        // saved token past its expiry is dropped and the user signs in again.
+        if (value && isTokenExpired(value)) {
+          SecureStore.deleteItemAsync(STORAGE_KEYS.ACCESS_TOKEN).catch(
+            (error: unknown) => {
+              if (__DEV__) console.warn("Could not remove the token:", error);
+            },
+          );
+          setAccessToken(null);
+          return;
+        }
+
         setAccessToken(value);
       })
       // Reading can fail on a fresh install; start signed out instead.
