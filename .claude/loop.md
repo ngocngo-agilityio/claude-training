@@ -9,6 +9,13 @@ Run these steps from the repo root on every tick.
 
    If neither has an open PR/MR, skip to step 6 and reply `ℹ️ No open PR/MR for <branch>`.
 
+2a. If the open request is a GitHub PR, check its CI. CI runs on GitHub Actions, not GitLab. Get `<owner>/<repo>` from `git remote get-url github`, then:
+
+- Run `gh pr checks <number> --repo <owner>/<repo>`.
+- If `verify` is still pending, skip to step 6 and reply `⏳ CI running for PR #<number>`.
+- If `verify` failed, read the log with `gh run view --log-failed --repo <owner>/<repo>`. Fix the cause with the smallest change (step 4), rerun `pnpm run typecheck` and `pnpm run lint`, and explain the fix in one line. Do not push.
+- If `verify` passed, reply `✅ CI green for PR #<number>`. Tell the user the loop can be stopped.
+
 3. Read the unresolved comments:
    - GitHub: fetch review threads with `gh api graphql -F owner='{owner}' -F repo='{repo}' -F number=<n> -f query='query($owner:String!, $repo:String!, $number:Int!) { repository(owner:$owner, name:$repo) { pullRequest(number:$number) { reviewThreads(first:100) { nodes { isResolved path line comments(first:20) { nodes { author { login } body } } } } } } }'`. Keep only threads with `isResolved == false`.
    - GitLab: `glab api projects/:id/merge_requests/<iid>/discussions`. Keep only discussions whose notes have `resolvable: true` and `resolved: false`.
