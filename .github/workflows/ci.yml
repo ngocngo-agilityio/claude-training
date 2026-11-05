@@ -1,0 +1,58 @@
+# Workflow name shown in the GitHub Actions tab
+name: CI
+
+# Run on every pull request, on pushes to main,
+# and on demand from the Actions tab.
+# Feature branches are covered by pull_request, so they are not listed under push
+# (listing them would run CI twice for every push to a branch with an open PR).
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# A new push to the same branch cancels the older run, saving runner minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Single job; its name "verify" is the status check to require in branch protection.
+  verify:
+    name: verify
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    permissions:
+      # Read-only access to the repository code is all this job needs.
+      contents: read
+    env:
+      # Skip the husky "prepare" script in CI; hooks are for local commits only.
+      HUSKY: "0"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Reads the exact pnpm version from the "packageManager" field in package.json.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      # Node version is pinned in .nvmrc so CI matches local development.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        # --frozen-lockfile fails the run if pnpm-lock.yaml is out of date.
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Test
+        run: pnpm run test
